@@ -6,28 +6,30 @@ const token = "XXX";
 
 const bot = new TelegramApi(token, { polling: true });
 
+bot.setMyCommands([
+  { command: "/start", description: "Приветствие" },
+  { command: "/cat", description: "Случайное изображение кота" },
+  { command: "/dog", description: "Случайное изображение собаки" },
+  { command: "/weather", description: "Погода" },
+]);
+
 bot.on("message", async (msg) => {
-  const catImage = axios
-    .get("https://meow.senither.com/v1/random")
-    .then((resolve) => console.log(resolve));
-  // .then((json) => json[0].url);
+  const catImage = "https://meow.senither.com/v1/random";
   const text = msg.text;
   const chatId = msg.chat.id;
-  console.log(catImage);
 
   if (text === "/start") {
     bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
   }
-  if (text === "/help")
-    bot.sendMessage(
-      chatId,
-      `Вот список доступных команд:
-/cat - случайное изображение кота;
-/dog - случайное изображение собаки;
-/weather - погода`
-    );
 
   if (text === "/cat") {
-    await bot.sendPhoto(chatId, catImage);
+    await bot.sendPhoto(chatId, getImageCat(catImage));
   }
 });
+
+async function getImageCat(path) {
+  await axios
+    .get(path)
+    .then((response) => response.json())
+    .then((json) => json[0].data.url);
+}
