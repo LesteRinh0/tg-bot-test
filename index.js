@@ -14,9 +14,33 @@ bot.setMyCommands([
 
 bot.onText(/\/weather/, (msg) => {
   bot.sendMessage(msg.chat.id, "Привет! В каком городе вы находитесь?");
-  bot.onText(/(.+)/, async (msg, match) => {
-    const city = match[1];
+});
 
+bot.onText(/(.+)/, async (msg, match) => {
+  const text = match[1];
+  const chatId = msg.chat.id;
+  console.log(msg);
+
+  if (msg.entities && msg.entities[0].type === "bot_command") {
+    if (text === "/start") {
+      bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
+    }
+
+    if (text === "/cat") {
+      const response = await axios.get("https://meow.senither.com/v1/random");
+      const cat = response.data.data.url;
+      await bot.sendPhoto(chatId, cat);
+    }
+
+    if (text === "/dog") {
+      const response = await axios.get(
+        "https://dog.ceo/api/breeds/image/random"
+      );
+      const dog = response.data.message;
+      await bot.sendPhoto(chatId, dog);
+    }
+  } else {
+    const city = text;
     try {
       const result = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API}&units=metric`
@@ -27,40 +51,14 @@ bot.onText(/\/weather/, (msg) => {
       const temp = main.temp;
 
       bot.sendMessage(
-        msg.chat.id,
+        chatId,
         `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`
       );
     } catch (error) {
       bot.sendMessage(
-        msg.chat.id,
+        chatId,
         "Не удалось найти такой город. Попробуйте еще раз."
       );
     }
-  });
-});
-
-bot.on("message", async (msg) => {
-  const dogImage = "https://dog.ceo/api/breeds/image/random";
-  const catImage = "https://meow.senither.com/v1/random";
-  const text = msg.text;
-  const chatId = msg.chat.id;
-  console.log(msg);
-
-  if (text === "/start") {
-    bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
-  }
-
-  if (text === "/cat") {
-    const cat = await axios
-      .get(catImage)
-      .then((response) => response.data.data.url);
-    await bot.sendPhoto(chatId, cat);
-  }
-
-  if (text === "/dog") {
-    const dog = await axios
-      .get(dogImage)
-      .then((response) => response.data.message);
-    await bot.sendPhoto(chatId, dog);
   }
 });
