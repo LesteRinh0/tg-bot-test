@@ -17,7 +17,7 @@ bot.on("message", async (msg) => {
   const catImage = "https://meow.senither.com/v1/random";
   const text = msg.text;
   const chatId = msg.chat.id;
-  //console.log(msg.text);
+  console.log(msg);
 
   if (text === "/start") {
     bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
@@ -36,31 +36,33 @@ bot.on("message", async (msg) => {
       .then((response) => response.data.message);
     await bot.sendPhoto(chatId, dog);
   }
+});
+bot.onText(/\/weather/, (msg) => {
+  bot.sendMessage(msg.chat.id, "Привет! В каком городе вы находитесь?");
+});
 
-  /*if (text === "/weather") {
-    bot.sendMessage(chatId, `Введите нужный вам город`);
-    const cityName = msg.text;
-    /*if (cityName != "/weather") {
-      const city = await axios
-        .get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${process.env.WEATHER_API}`
-        )
-        .then((ts) => ts);
+if (msg.text === "/weather") {
+  bot.onText(/(.+)/, async (msg, match) => {
+    const city = match[1];
+
+    try {
+      const result = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API}&units=metric`
+      );
+      const { name, weather, main } = result.data;
+
+      const description = weather[0].description;
+      const temp = main.temp;
+
+      bot.sendMessage(
+        msg.chat.id,
+        `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`
+      );
+    } catch (error) {
+      bot.sendMessage(
+        msg.chat.id,
+        "Не удалось найти такой город. Попробуйте еще раз."
+      );
     }
-
-    /*const city = await axios
-      .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${process.env.WEATHER_API}`
-      )
-     .then((resp) => console.log(resp.data));
-    console.log(cityName);
-    console.log(city);
-     bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
-  }
-}*/
-});
-
-bot.onText(/\/weather/, (msg, match) => {
-  console.log("");
-  bot.sendMessage(chatId, "");
-});
+  });
+}
