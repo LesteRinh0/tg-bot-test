@@ -72,7 +72,8 @@ bot.onText(/(.+)/, async (msg, match) => {
 /subscribe *Город* - подписка на ежедневные уведомления о погоде введенного города;
 /unsubscribe *Город* - отписка от ежедневных уведомлений о погоде введенного города;
 /weather *Город* - сведения о погоде выбранного города;
-/recommend *Город* - рекомендации по местам, которые можно посетить в введенном городе`
+/recommend *Город* - рекомендации по местам, которые можно посетить в введенном городе
+/createTask - создание задач и напоминаний`
       );
     }
   }
@@ -232,13 +233,12 @@ bot.onText(/\/createTask/, async (msg) => {
     });
   });
 });
-
 bot.on("callback_query", function onCallbackQuery(callbackQuery) {
   const data = callbackQuery.data;
   const msg = callbackQuery.message;
   const everyHour = "0 * * * *";
-  const everyDay = "0 0 * * *";
-  const everyWeek = "0 0 * * FRI";
+  const every2Hours = "0 */2 * * *";
+  const every4Hours = "0 */4 * * *";
 
   const opts = {
     chat_id: msg.chat.id,
@@ -256,12 +256,12 @@ bot.on("callback_query", function onCallbackQuery(callbackQuery) {
             callback_data: "час/" + action[1],
           },
           {
-            text: "День",
-            callback_data: "день/" + action[1],
+            text: "2 часа",
+            callback_data: "2 часа/" + action[1],
           },
           {
-            text: "Неделя",
-            callback_data: "неделю/" + action[1],
+            text: "4 часа",
+            callback_data: "4 часа/" + action[1],
           },
         ],
       ],
@@ -276,12 +276,12 @@ bot.on("callback_query", function onCallbackQuery(callbackQuery) {
 
     bot.editMessageText(text, { ...opts, reply_markup: options });
   } else {
-    const text = "Напоминание установлено на " + action[0];
+    const text = "Напоминание установлено через " + action[0];
 
     const taskTime = {
       ["час"]: everyHour,
-      ["день"]: everyDay,
-      ["неделя"]: everyWeek,
+      ["2 часа"]: every2Hours,
+      ["4 часа"]: every4Hours,
     };
 
     schedule.scheduleJob("taskNotif", taskTime[action[0]], async () => {
