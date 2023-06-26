@@ -7,7 +7,7 @@
   "scripts": {
     "build": "jsc",
     "dev": "nodemon index.js",
-    "start": "node dist/bot.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
