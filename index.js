@@ -6,12 +6,10 @@ import { MongoClient } from "mongodb";
 import TelegramApi from "node-telegram-bot-api";
 import express from "express";
 
-var packageInfo = require("./package.json");
-
 var app = express();
 
 app.get("/", function (req, res) {
-  res.json({ version: packageInfo.version });
+  res.json({ version: "1.0.0" });
 });
 
 var server = app.listen(process.env.PORT || 5000, function () {
