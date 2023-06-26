@@ -112,8 +112,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
   bot.sendMessage(chatId, "Выберите категорию:", keyboard);
 
-  let result = [];
-
   bot.on("message", async (msg) => {
     const chatId = msg.chat.id;
     let category;
@@ -142,7 +140,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
         } else if (category === "accommodation") {
           value = "Гостиницы";
         }
-        result = response.data.features
+        const result = response.data.features
           .filter((feature) => feature.properties.name)
           .map((feature) => feature.properties.name)
           .join("\n");
