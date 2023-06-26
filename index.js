@@ -155,7 +155,6 @@ ${result}`
       } catch (error) {}
     }
   });
-  bot.removeListeners("message");
 });
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
