@@ -112,6 +112,8 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
   bot.sendMessage(chatId, "Выберите категорию:", keyboard);
 
+  let result = [];
+
   bot.on("message", async (msg) => {
     const chatId = msg.chat.id;
     let category;
@@ -140,7 +142,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
         } else if (category === "accommodation") {
           value = "Гостиницы";
         }
-        const result = response.data.features
+        result = response.data.features
           .filter((feature) => feature.properties.name)
           .map((feature) => feature.properties.name)
           .join("\n");
@@ -152,9 +154,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 ${result}`
         );
         result = [];
-      } catch (error) {
-        bot.sendMessage(chatId, "Произошла ошибка. Попробуйте еще раз.");
-      }
+      } catch (error) {}
     }
   });
 });
