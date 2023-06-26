@@ -144,6 +144,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
           .filter((feature) => feature.properties.name)
           .map((feature) => feature.properties.name)
           .join("\n");
+        result = null;
         bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${value}:
