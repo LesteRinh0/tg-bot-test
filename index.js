@@ -4,7 +4,8 @@ import { everyDayNotify } from "./src/subscribe.js";
 import schedule from "node-schedule";
 import { MongoClient } from "mongodb";
 import TelegramApi from "node-telegram-bot-api";
-var express = require("express");
+import express from "express";
+
 var packageInfo = require("./package.json");
 
 var app = express();
