@@ -92,6 +92,8 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
   }
 });
+const recommendationsMap = {};
+
 bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
@@ -112,7 +114,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
   bot.sendMessage(chatId, "Выберите категорию:", keyboard);
 
-  bot.on("message", async (msg) => {
+  const messageHandler = async (msg) => {
     const chatId = msg.chat.id;
     let category;
     if (msg.text === "Супер-маркеты") {
@@ -145,16 +147,44 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
           .map((feature) => feature.properties.name)
           .join("\n");
 
+        recommendationsMap[chatId] = {
+          category: value,
+          results: result,
+        };
+
         bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${value}:
 
 ${result}`
         );
-        result = [];
       } catch (error) {}
     }
-  });
+    bot.removeMessageListener(messageHandler);
+  };
+
+  bot.on("message", messageHandler);
+});
+
+bot.onText(/\/clear/, (msg) => {
+  const chatId = msg.chat.id;
+  delete recommendationsMap[chatId];
+  bot.sendMessage(chatId, "Результаты очищены");
+});
+
+bot.onText(/\/showresults/, (msg) => {
+  const chatId = msg.chat.id;
+  const recommendations = recommendationsMap[chatId];
+  if (recommendations) {
+    bot.sendMessage(
+      chatId,
+      `Предлагаю вам следующие ${recommendations.category}:
+
+${recommendations.results}`
+    );
+  } else {
+    bot.sendMessage(chatId, "Результатов нет");
+  }
 });
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
