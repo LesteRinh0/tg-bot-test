@@ -171,7 +171,7 @@ bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
       } else {
         schedule.scheduleJob(
           "timer",
-          "* * * * *",
+          "0 9 * * *",
           everyDayNotify(bot, cityName, chatId)
         );
         bot.sendMessage(
