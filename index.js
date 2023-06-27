@@ -151,7 +151,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
 ${result}`
         );
-        result = [];
+        result = null;
       } catch (error) {}
     }
   });
