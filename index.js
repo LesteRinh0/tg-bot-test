@@ -1,26 +1,26 @@
 import axios from "axios";
-import "dotenv/config";
+import { key } from "./src/constants.js";
 import { everyDayNotify } from "./src/subscribe.js";
 import schedule from "node-schedule";
 import { MongoClient } from "mongodb";
 import TelegramApi from "node-telegram-bot-api";
 import express from "express";
 
-var app = express();
+const app = express();
 
 app.get("/", function (req, res) {
   res.json({ version: "1.0.0" });
 });
 
-var server = app.listen(process.env.PORT || 5000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(key.port || 5000, function () {
+  const host = server.address().address;
+  const port = server.address().port;
 
   console.log("Web server started at http://%s:%s", host, port);
 });
 
-const client = new MongoClient(process.env.URL);
-const bot = new TelegramApi(process.env.TOKEN, { polling: true });
+const client = new MongoClient(key.url);
+const bot = new TelegramApi(key.token, { polling: true });
 client.connect();
 const db = client.db("bot");
 const collection = db.collection("subscribers");
@@ -38,7 +38,7 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
 
   try {
     const result = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.WEATHER_API}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`
     );
     const { name, weather, main } = result.data;
 
@@ -66,15 +66,13 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === "/cat") {
-      const response = await axios.get("https://meow.senither.com/v1/random");
+      const response = await axios.get(key.cat_url);
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === "/dog") {
-      const response = await axios.get(
-        "https://dog.ceo/api/breeds/image/random"
-      );
+      const response = await axios.get(key.dog_url);
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
     }
@@ -96,7 +94,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
   const response = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.WEATHER_API}&units=metric`
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`
   );
   const { lon, lat } = response.data.coord;
   const keyboard = {
@@ -128,7 +126,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     if (category) {
       try {
         const response = await axios.get(
-          `https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${process.env.PLACE_API}`
+          `https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`
         );
         let value;
         if (category === "commercial") {
