@@ -64,6 +64,30 @@ bot.onText(/(.+)/, async (msg, match) => {
     if (text === "/start") {
       bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
     }
+    if (text === "/weather") {
+      bot.sendMessage(
+        chatId,
+        `Не введен город при вызове команды! Пример: /weather Минск`
+      );
+    }
+    if (text === "/recommend") {
+      bot.sendMessage(
+        chatId,
+        `Не введен город при вызове команды! Пример: /recommend Минск`
+      );
+    }
+    if (text === "/subscribe") {
+      bot.sendMessage(
+        chatId,
+        `Не введен город при вызове команды! Пример: /subscribe Минск`
+      );
+    }
+    if (text === "/unsubscribe") {
+      bot.sendMessage(
+        chatId,
+        `Не введен город при вызове команды! Пример: /unsubscribe Минск`
+      );
+    }
 
     if (text === "/cat") {
       const response = await axios.get("https://meow.senither.com/v1/random");
