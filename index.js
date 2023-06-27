@@ -112,7 +112,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
   bot.sendMessage(chatId, "Выберите категорию:", keyboard);
 
-  bot.on("message", async (msg) => {
+  bot.once("message", async (msg) => {
     const chatId = msg.chat.id;
     let category;
     if (msg.text === "Супер-маркеты") {
