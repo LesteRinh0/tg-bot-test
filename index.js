@@ -151,7 +151,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
 ${result}`
         );
-        result = [];
       } catch (error) {
         bot.sendMessage(chatId, "Произошла ошибка. Попробуйте еще раз.");
       }
