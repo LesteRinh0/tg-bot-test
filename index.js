@@ -34,7 +34,7 @@ bot.setMyCommands([
 
 bot.onText(/\/weather (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
-  const cityName = "Полоцк";
+  const cityName = match[1];
 
   try {
     const result = await axios.get(
