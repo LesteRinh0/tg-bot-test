@@ -66,13 +66,15 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === "/cat") {
-      const response = await axios.get(key.cat_url);
+      const response = await axios.get("https://meow.senither.com/v1/random");
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === "/dog") {
-      const response = await axios.get(key.dog_url);
+      const response = await axios.get(
+        "https://dog.ceo/api/breeds/image/random"
+      );
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
     }
