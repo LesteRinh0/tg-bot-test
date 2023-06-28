@@ -53,7 +53,7 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
   } catch (error) {
     bot.sendMessage(
       chatId,
-      'Не удалось найти такой город. Попробуйте еще раз.'
+      error
     );
   }
 });
