@@ -10,6 +10,15 @@ import { sendErrorMessage } from './src/recommendFunc.js';
 import { handleSubscribe, handleUnsubscribe } from './src/sub-unsub-functions.js';
 import { createTask } from './src/saveTask.js';
 import { app } from './src/serverConfig.js';
+import gracefulShutdown from './src/gracefulShutdown.js';
+
+process.on('unhandledRejection', (error) => {
+  console.error('Unhandled Rejection:', error);
+});
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
+process.on('SIGINT', gracefulShutdown);
 
 client.connect();
 const server = app.listen(keys.port || 5000, () => {
