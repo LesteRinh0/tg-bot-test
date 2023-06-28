@@ -8,5 +8,5 @@ export const key = {
   place_api: process.env.PLACE_API,
   dog_url: process.env.DOG_URL,
   cat_url: process.env.CAT_URL,
-  asd: process.env.ASL
+  asd: process.env.ASD
 };
