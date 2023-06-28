@@ -37,10 +37,9 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
   const cityName = match[1];
 
   try {
-    const result = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=
-      ${key.weather_api}&units=metric`
-    );
+    const link = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=
+    ${key.weather_api}&units=metric`
+    const result = await axios.get(link);
     const { name, weather, main } = result.data;
 
     const { description } = weather[0];
@@ -53,7 +52,7 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
   } catch (error) {
     bot.sendMessage(
       chatId,
-      `Не удалось найти такой город. Попробуйте еще раз. Ошибка ${key.weather_api} ${key.cat_url} ${key.dog_url} ${key.place_api} ${key.port} ${key.token}`
+      `Не удалось найти такой город. Попробуйте еще раз. Ошибка ${link}}`
     );
   }
 });
