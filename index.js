@@ -33,7 +33,7 @@ bot.onText(/(.+)/, async (msg, match) => {
   const text = match[1];
   const chatId = msg.chat.id;
 
-  processCommand(text, chatId);
+  processCommand(text, chatId, bot);
 });
 bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
