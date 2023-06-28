@@ -64,7 +64,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
 ${result}`
         );
-        sendErrorMessage(chatId, bot);
     });
   } catch (error) {
     sendErrorMessage(chatId, bot);
