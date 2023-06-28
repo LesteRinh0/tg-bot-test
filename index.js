@@ -57,17 +57,14 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
 
     bot.once('message', async (categoryMsg) => {
-      try {
-        const result = await getRecommendations(categoryMsg.text, lon, lat, chatId, bot);
-        bot.sendMessage(
+      const result = await getRecommendations(categoryMsg.text, lon, lat, chatId, bot);
+      bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${categoryMsg.text}:
 
 ${result}`
         );
-      } catch (error) {
         sendErrorMessage(chatId, bot);
-      }
     });
   } catch (error) {
     sendErrorMessage(chatId, bot);
