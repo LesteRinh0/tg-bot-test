@@ -116,62 +116,66 @@ bot.onText(/(.+)/, async (msg, match) => {
 bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
-  let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`);
-  const { lon, lat } = response.data.coord;
-  const keyboard = {
-    reply_markup: {
-      keyboard: [
-        ['Супер-маркеты'],
-        ['Рестораны'],
-        ['Активности'],
-        ['Гостиницы'],
-      ],
-    },
-  };
+  try {
+    let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`);
+    const { lon, lat } = response.data.coord;
+    const keyboard = {
+      reply_markup: {
+        keyboard: [
+          ['Супер-маркеты'],
+          ['Рестораны'],
+          ['Активности'],
+          ['Гостиницы'],
+        ],
+      },
+    };
 
-  bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
+    bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
 
-  bot.once('message', async (categoryMsg) => {
-    let category;
-    if (categoryMsg.text === 'Супер-маркеты') {
-      category = 'commercial';
-    } else if (categoryMsg.text === 'Рестораны') {
-      category = 'catering';
-    } else if (categoryMsg.text === 'Активности') {
-      category = 'activity';
-    } else if (categoryMsg.text === 'Гостиницы') {
-      category = 'accommodation';
-    }
+    bot.once('message', async (categoryMsg) => {
+      let category;
+      if (categoryMsg.text === 'Супер-маркеты') {
+        category = 'commercial';
+      } else if (categoryMsg.text === 'Рестораны') {
+        category = 'catering';
+      } else if (categoryMsg.text === 'Активности') {
+        category = 'activity';
+      } else if (categoryMsg.text === 'Гостиницы') {
+        category = 'accommodation';
+      }
 
-    if (category) {
-      try {
-        response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`);
-        let value;
-        if (category === 'commercial') {
-          value = 'Супер-маркеты';
-        } else if (category === 'catering') {
-          value = 'Рестораны';
-        } else if (category === 'activity') {
-          value = 'Активности';
-        } else if (category === 'accommodation') {
-          value = 'Гостиницы';
-        }
-        const result = response.data.features
-          .filter((feature) => feature.properties.name)
-          .map((feature) => feature.properties.name)
-          .join('\n');
+      if (category) {
+        try {
+          response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`);
+          let value;
+          if (category === 'commercial') {
+            value = 'Супер-маркеты';
+          } else if (category === 'catering') {
+            value = 'Рестораны';
+          } else if (category === 'activity') {
+            value = 'Активности';
+          } else if (category === 'accommodation') {
+            value = 'Гостиницы';
+          }
+          const result = response.data.features
+            .filter((feature) => feature.properties.name)
+            .map((feature) => feature.properties.name)
+            .join('\n');
 
-        bot.sendMessage(
-          chatId,
-          `Предлагаю вам следующие ${value}:
+          bot.sendMessage(
+            chatId,
+            `Предлагаю вам следующие ${value}:
 
 ${result}`
-        );
-      } catch (error) {
-        bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+          );
+        } catch (error) {
+          bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+        }
       }
-    }
-  });
+    });
+  } catch (error) {
+    bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+  }
 });
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
