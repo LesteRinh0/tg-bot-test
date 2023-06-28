@@ -1,5 +1,5 @@
 import TelegramApi from 'node-telegram-bot-api';
 
-import { key } from './constants.js';
+import { keys } from './constants.js';
 
-export const bot = new TelegramApi(key.token, { polling: true });
+export const bot = new TelegramApi(keys.token, { polling: true });

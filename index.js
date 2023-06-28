@@ -1,7 +1,7 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { key } from './src/constants.js';
+import { keys, errors, links } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
@@ -18,24 +18,15 @@ bot.setMyCommands([
 bot.onText(/\/weather (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
-  const link = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`;
+  const link = `${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`;
   try {
-    
     const result = await axios.get(link);
     const { name, weather, main } = result.data;
-
     const { description } = weather[0];
     const { temp } = main;
-
-    bot.sendMessage(
-      chatId,
-      `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`
-    );
+    bot.sendMessage(chatId, `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`);
   } catch (error) {
-    bot.sendMessage(
-      chatId,
-      'Не удалось найти такой город. Попробуйте еще раз.'
-    );
+    bot.sendMessage(chatId, errors.errorWeather);
   }
 });
 bot.onText(/(.+)/, async (msg, match) => {
@@ -72,13 +63,13 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === '/cat') {
-      const response = await axios.get(key.cat_url);
+      const response = await axios.get(links.cat_url);
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === '/dog') {
-      const response = await axios.get(key.dog_url);
+      const response = await axios.get(links.dog_url);
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
     }
@@ -100,7 +91,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
   try {
-    let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`);
+    let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${keys.weather_api}&units=metric`);
     const { lon, lat } = response.data.coord;
     const keyboard = {
       reply_markup: {
@@ -129,7 +120,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
       if (category) {
         try {
-          response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`);
+          response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${keys.place_api}`);
           let value;
           if (category === 'commercial') {
             value = 'Супер-маркеты';
