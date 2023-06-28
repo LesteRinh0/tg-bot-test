@@ -35,8 +35,7 @@ bot.setMyCommands([
 bot.onText(/\/weather (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
-  const link = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=
-    ${key.weather_api}&units=metric`;
+  const link = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`;
   try {
     
     const result = await axios.get(link);
