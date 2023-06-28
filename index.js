@@ -3,9 +3,9 @@ import schedule from 'node-schedule';
 
 import { key } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
-import { client, collection } from './mongoConfig.js';
-import { bot } from './botConfig.js';
-import { server } from './serverConfig.js';
+import { client, collection } from './src/mongoConfig.js';
+import { bot } from './src/botConfig.js';
+import { server } from './src/serverConfig.js';
 
 client.connect();
 server();
