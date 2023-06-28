@@ -1,4 +1,4 @@
-import { everyDayNotify } from "./subscribe";
+import { everyDayNotify } from "./subscribe.js";
 import { sendErrorMessage } from './recommendFunc.js';
 
 
