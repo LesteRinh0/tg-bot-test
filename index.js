@@ -8,7 +8,6 @@ import { bot } from './src/botConfig.js';
 import { server } from './src/serverConfig.js';
 
 client.connect();
-server();
 
 bot.setMyCommands([
   { command: '/help', description: 'Список команд' },
