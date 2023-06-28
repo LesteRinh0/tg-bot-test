@@ -41,6 +41,9 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const cityName = match[1];
   try {
     let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${keys.weather_api}&units=metric`);
+    if (response.cod == 404){
+      bot.sendMessage(chatId, 'Город не найден');
+    }
     const { lon, lat } = response.data.coord;
     const keyboard = {
       reply_markup: {
