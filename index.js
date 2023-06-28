@@ -61,7 +61,7 @@ bot.onText(/(.+)/, async (msg, match) => {
 
   if (msg.entities && msg.entities[0].type === 'bot_command') {
     if (text === '/start') {
-      bot.sendMessage(chatId, `${key.asd}Добро пожаловать ${msg.chat.first_name}!`);
+      bot.sendMessage(chatId, `${key.dog_url}Добро пожаловать ${msg.chat.first_name}!`);
     }
     if (text === '/weather') {
       bot.sendMessage(
