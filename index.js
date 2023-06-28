@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import schedule from 'node-schedule';
 import TelegramApi from 'node-telegram-bot-api';
 
-import { key } from './src/constants.js';
+import { key, dog_url, cat_url } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
 
 const app = express();
@@ -61,7 +61,7 @@ bot.onText(/(.+)/, async (msg, match) => {
 
   if (msg.entities && msg.entities[0].type === 'bot_command') {
     if (text === '/start') {
-      bot.sendMessage(chatId, `${key.dog_url}Добро пожаловать ${msg.chat.first_name}!`);
+      bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
     }
     if (text === '/weather') {
       bot.sendMessage(
@@ -89,15 +89,13 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === '/cat') {
-      const response = await axios.get('https://meow.senither.com/v1/random');
+      const response = await axios.get(cat_url);
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === '/dog') {
-      const response = await axios.get(
-        'https://dog.ceo/api/breeds/image/random'
-      );
+      const response = await axios.get(dog_url);
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
     }

@@ -6,6 +6,7 @@ export const key = {
   token: process.env.TOKEN,
   weather_api: process.env.WEATHER_API,
   place_api: process.env.PLACE_API,
-  dog_url: process.env.DOG_URL,
-  cat_url: process.env.CAT_URL,
 };
+
+  export const dog_url = 'https://dog.ceo/api/breeds/image/random';
+  export const cat_url = 'https://meow.senither.com/v1/random';
