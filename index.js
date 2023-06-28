@@ -6,7 +6,7 @@ import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
-import { processRecommendation } from './src/recommendFunc.js';
+import { getRecommendations } from './src/recommendFunc.js';
 
 client.connect();
 
@@ -57,16 +57,20 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     };
 
     bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
-  } catch (error) {
-    bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
-  }
-});
 
-bot.on('message', async (msg) => {
-  const { text, chat: { id: chatId } } = msg;
-  try {
-    const categoryMsg = text;
-    processRecommendation(categoryMsg, lon, lat, bot, chatId);
+    bot.once('message', async (categoryMsg) => {
+      try {
+        const result = await getRecommendations(categoryMsg.text, lon, lat, bot);
+        bot.sendMessage(
+          chatId,
+          `Предлагаю вам следующие ${categoryMsg.text}:
+
+${result}`
+        );
+      } catch (error) {
+        bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+      }
+    });
   } catch (error) {
     bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
   }

@@ -31,17 +31,4 @@ export async function getRecommendations(category, lon, lat, bot) {
   
     return result;
   }
-
-  export const processRecommendation = async (categoryMsg, lon, lat, bot, chatId) => {
-    try {
-      const result = await getRecommendations(categoryMsg, lon, lat, bot);
-      bot.sendMessage(
-        chatId,
-        `Предлагаю вам следующие ${categoryMsg}:
   
-  ${result}`
-      );
-    } catch (error) {
-      bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
-    }
-  };
