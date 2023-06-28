@@ -78,4 +78,4 @@ bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
   }
 });
 bot.onText(/\/createTask/, createTask(bot, collection));
-bot.on('callback_query', setReminder(callbackQuery, bot, schedule));
+bot.on('callback_query', setReminder(bot, schedule));
