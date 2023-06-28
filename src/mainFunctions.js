@@ -1,4 +1,4 @@
-export async function processCommand(text, chatId, bot) {
+export async function processCommand(text, chatId, bot, msg) {
     if (text === '/start') {
       bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
     } else if (text === '/weather') {
