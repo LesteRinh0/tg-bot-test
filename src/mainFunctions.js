@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { links } from './constants.js';
+
 export async function processCommand(text, chatId, bot, msg) {
     if (text === '/start') {
       bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
