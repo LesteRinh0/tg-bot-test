@@ -41,6 +41,7 @@ export async function createTask(createTaskMsg) {
               'Хотите получить напоминание о задаче?',
               opts
             );
+            bot.on('callback_query', setReminder);
           } catch (error) {
             bot.sendMessage(chatId, 'Ошибка при сохранении задачи.');
           }
@@ -49,7 +50,7 @@ export async function createTask(createTaskMsg) {
     });
   }
 
-export async function setReminder(callbackQuery) {
+async function setReminder(callbackQuery) {
     const { data } = callbackQuery;
     const msg = callbackQuery.message;
     const everyHour = '0 * * * *';
