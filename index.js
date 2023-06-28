@@ -7,6 +7,7 @@ import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
 import { getRecommendations } from './src/recommendFunc.js';
+import { sendErrorMessage } from './src/recommendFunc.js';
 
 client.connect();
 
@@ -41,9 +42,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const cityName = match[1];
   try {
     let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${keys.weather_api}&units=metric`);
-    if (response.cod == 404){
-      bot.sendMessage(chatId, 'Город не найден');
-    }
     const { lon, lat } = response.data.coord;
     const keyboard = {
       reply_markup: {
@@ -60,7 +58,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
     bot.once('message', async (categoryMsg) => {
       try {
-        const result = await getRecommendations(categoryMsg.text, lon, lat, bot);
+        const result = await getRecommendations(categoryMsg.text, lon, lat, chatId, bot);
         bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${categoryMsg.text}:
@@ -68,11 +66,11 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 ${result}`
         );
       } catch (error) {
-        bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+        sendErrorMessage(chatId, bot);
       }
     });
   } catch (error) {
-    bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+    sendErrorMessage(chatId, bot);
   }
 });
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {

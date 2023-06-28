@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { keys } from './constants.js';
 
-export async function getRecommendations(category, lon, lat, bot) {
+function getCategoryUrlAndValue(category, lon, lat) {
     let url;
     let value;
   
@@ -19,16 +19,30 @@ export async function getRecommendations(category, lon, lat, bot) {
       value = 'Гостиницы';
     }
   
-    if (!url || !value) {
-        bot.sendMessage(chatId, 'Вы не выбрали категорию из списка!');
-    }
-  
-    const response = await axios.get(url);
-    const result = response.data.features
-      .filter((feature) => feature.properties.name)
-      .map((feature) => feature.properties.name)
-      .join('\n');
-  
-    return result;
+    return { url, value };
   }
   
+  export function sendErrorMessage(chatId, bot) {
+    bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
+  }
+
+  export async function getRecommendations(category, lon, lat, chatId, bot) {
+    const { url, value } = getCategoryUrlAndValue(category, lon, lat);
+  
+    if (!url || !value) {
+      bot.sendMessage(chatId, 'Вы не выбрали категорию из списка!');
+      return;
+    }
+  
+    try {
+      const response = await axios.get(url);
+      const result = response.data.features
+        .filter((feature) => feature.properties.name)
+        .map((feature) => feature.properties.name)
+        .join('\n');
+    
+      return result;
+    } catch (error) {
+      sendErrorMessage(chatId, bot);
+    }
+  }
