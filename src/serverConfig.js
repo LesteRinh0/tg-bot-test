@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { key } from './src/constants.js';
+import { key } from './constants.js';
 
 const app = express();
 app.get('/', (res) => {

@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 
-import { key } from './src/constants.js';
+import { key } from './constants.js';
 
 mongoose.connect(key.url).then(() => console.log('Connected!'));
 
