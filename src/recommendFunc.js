@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { keys } from './constants.js';
+import { keys, sendErrorMessage } from './constants.js';
 
 function getCategoryUrlAndValue(category, lon, lat) {
     let url;
@@ -22,11 +22,7 @@ function getCategoryUrlAndValue(category, lon, lat) {
     return { url, value };
   }
   
-  export function sendErrorMessage(chatId, bot) {
-    bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
-  }
-
-  export async function getRecommendations(category, lon, lat, chatId, bot) {
+export async function getRecommendations(category, lon, lat, chatId, bot) {
     const { url, value } = getCategoryUrlAndValue(category, lon, lat);
   
     if (!url || !value) {

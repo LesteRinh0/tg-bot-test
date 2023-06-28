@@ -1,13 +1,12 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, errors, links } from './src/constants.js';
+import { keys, links, sendErrorMessage } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
 import { getRecommendations } from './src/recommendFunc.js';
-import { sendErrorMessage } from './src/recommendFunc.js';
 
 client.connect();
 
@@ -28,7 +27,7 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
     const { temp } = main;
     bot.sendMessage(chatId, `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`);
   } catch (error) {
-    bot.sendMessage(chatId, errors.errorWeather);
+    sendErrorMessage(chatId, bot);
   }
 });
 bot.onText(/(.+)/, async (msg, match) => {
