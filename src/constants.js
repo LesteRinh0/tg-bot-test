@@ -1,8 +1,7 @@
-import dotenv from 'dotenv';
-import { env } from 'process';
+import 'dotenv/config';
 
 export const key = {
-  port: env.PORT,
+  port: process.env.PORT,
   url: env.URL,
   token: env.TOKEN,
   weather_api: env.WEATHER_API,
@@ -10,5 +9,3 @@ export const key = {
   dog_url: env.DOG_URL,
   cat_url: env.CAT_URL,
 };
-
-dotenv.config({ processEnv: key });

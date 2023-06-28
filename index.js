@@ -121,7 +121,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
   let response = await axios.get(
-    // eslint-disable-next-line max-len
     `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`
   );
   const { lon, lat } = response.data.coord;
@@ -153,7 +152,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     if (category) {
       try {
         response = await axios.get(
-          // eslint-disable-next-line max-len
           `https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`
         );
         let value;
