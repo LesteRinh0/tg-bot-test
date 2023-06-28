@@ -9,6 +9,7 @@ import { getRecommendations } from './src/recommendFunc.js';
 import { sendErrorMessage } from './src/recommendFunc.js';
 import { handleSubscribe, handleUnsubscribe } from './src/sub-unsub-functions.js';
 import { createTask } from './src/saveTask.js';
+import { app } from './src/serverConfig.js';
 
 client.connect();
 app.listen(keys.port || 5000, () => {
