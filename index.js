@@ -133,15 +133,15 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
   bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
 
-  bot.once('message', async () => {
+  bot.once('message', async (categoryMsg) => {
     let category;
-    if (msg.text === 'Супер-маркеты') {
+    if (categoryMsg.text === 'Супер-маркеты') {
       category = 'commercial';
-    } else if (msg.text === 'Рестораны') {
+    } else if (categoryMsg.text === 'Рестораны') {
       category = 'catering';
-    } else if (msg.text === 'Активности') {
+    } else if (categoryMsg.text === 'Активности') {
       category = 'activity';
-    } else if (msg.text === 'Гостиницы') {
+    } else if (categoryMsg.text === 'Гостиницы') {
       category = 'accommodation';
     }
 
@@ -166,6 +166,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
         bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${value}:
+
 ${result}`
         );
       } catch (error) {
