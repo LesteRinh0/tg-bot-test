@@ -34,7 +34,7 @@ export async function handleSubscribe(msg, match, bot, collection, schedule) {
     }
   }
   
- export async function handleUnsubscribe(msg, match, bot, collection, schedule) {
+export async function handleUnsubscribe(msg, match, bot, collection, schedule) {
     const chatId = msg.chat.id;
     const cityName = match[2];
   
