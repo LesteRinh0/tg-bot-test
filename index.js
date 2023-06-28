@@ -46,12 +46,12 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
 
     bot.sendMessage(
       chatId,
-      `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`
+      `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C. ${key.dog_url} ${key.cat_url}`
     );
   } catch (error) {
     bot.sendMessage(
       chatId,
-      `Не удалось найти такой город. Попробуйте еще раз. Ошибка ${link}}`
+      'Не удалось найти такой город. Попробуйте еще раз.'
     );
   }
 });
@@ -89,14 +89,14 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === '/cat') {
-      const response = await axios.get(`https://${key.cat_url}`);
+      const response = await axios.get('https://meow.senither.com/v1/random');
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === '/dog') {
       const response = await axios.get(
-        `https://${key.dog_url}`
+        'https://dog.ceo/api/breeds/image/random'
       );
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
