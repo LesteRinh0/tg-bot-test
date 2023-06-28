@@ -77,5 +77,5 @@ bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
   }
 });
-bot.onText(/\/createTask/, createTask);
-bot.on('callback_query', setReminder);
+bot.onText(/\/createTask/, createTask(createTaskMsg, bot, collection));
+bot.on('callback_query', setReminder(callbackQuery, bot, schedule));
