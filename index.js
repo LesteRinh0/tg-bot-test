@@ -1,12 +1,13 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, links, sendErrorMessage } from './src/constants.js';
+import { keys, links } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
 import { getRecommendations } from './src/recommendFunc.js';
+import { sendErrorMessage } from './src/recommendFunc.js';
 
 client.connect();
 
