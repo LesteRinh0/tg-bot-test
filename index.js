@@ -6,6 +6,7 @@ import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
+import { getRecommendations } from './src/recommendFunc.js';
 
 client.connect();
 
@@ -55,50 +56,23 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
 
     bot.once('message', async (categoryMsg) => {
-      let category;
-      if (categoryMsg.text === 'Супер-маркеты') {
-        category = 'commercial';
-      } else if (categoryMsg.text === 'Рестораны') {
-        category = 'catering';
-      } else if (categoryMsg.text === 'Активности') {
-        category = 'activity';
-      } else if (categoryMsg.text === 'Гостиницы') {
-        category = 'accommodation';
-      }
-
-      if (category) {
-        try {
-          response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${keys.place_api}`);
-          let value;
-          if (category === 'commercial') {
-            value = 'Супер-маркеты';
-          } else if (category === 'catering') {
-            value = 'Рестораны';
-          } else if (category === 'activity') {
-            value = 'Активности';
-          } else if (category === 'accommodation') {
-            value = 'Гостиницы';
-          }
-          const result = response.data.features
-            .filter((feature) => feature.properties.name)
-            .map((feature) => feature.properties.name)
-            .join('\n');
-
-          bot.sendMessage(
-            chatId,
-            `Предлагаю вам следующие ${value}:
+      try {
+        const result = await getRecommendations(categoryMsg.text, lon, lat, bot);
+        bot.sendMessage(
+          chatId,
+          `Предлагаю вам следующие ${categoryMsg.text}:
 
 ${result}`
-          );
-        } catch (error) {
-          bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
-        }
+        );
+      } catch (error) {
+        bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
       }
     });
   } catch (error) {
     bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
   }
 });
+
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[2];
