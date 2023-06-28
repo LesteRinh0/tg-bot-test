@@ -2,12 +2,12 @@ import axios from 'axios';
 import schedule from 'node-schedule';
 
 import { keys, links } from './src/constants.js';
-import { everyDayNotify } from './src/subscribe.js';
 import { client, collection } from './src/mongoConfig.js';
 import { bot } from './src/botConfig.js';
 import { processCommand } from './src/mainFunctions.js';
 import { getRecommendations } from './src/recommendFunc.js';
 import { sendErrorMessage } from './src/recommendFunc.js';
+import { handleSubscribe, handleUnsubscribe } from './src/sub-unsub-functions.js';
 
 client.connect();
 
@@ -70,48 +70,10 @@ ${result}`
   }
 });
 bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
-  const chatId = msg.chat.id;
-  const cityName = match[2];
-
-  try {
-    if (match[1] === '/subscribe') {
-      const user = await collection.findOne({ id: chatId, city: cityName });
-      if (user) {
-        bot.sendMessage(
-          chatId,
-          `Вы уже подписаны на уведомления о погоде города ${cityName}.`
-        );
-      } else {
-        schedule.scheduleJob(
-          'timer',
-          '0 9 * * *',
-          everyDayNotify(bot, cityName, chatId)
-        );
-        bot.sendMessage(
-          chatId,
-          `Вы подписались на ежедневные уведомления о погоде города ${cityName}`
-        );
-        collection.insertOne({
-          id: chatId,
-          city: cityName,
-          name: msg.chat.first_name,
-        });
-      }
-    } else if (match[1] === '/unsubscribe') {
-      const user = await collection.findOne({ id: chatId, city: cityName });
-      if (!user) {
-        bot.sendMessage(chatId, `Вы не были подписаны на город ${cityName}.`);
-      } else {
-        collection.deleteMany({ id: chatId, city: cityName });
-        schedule.cancelJob('timer');
-        bot.sendMessage(
-          chatId,
-          `Вы отписались от ежедневных уведомлений о погоде города ${cityName}.`
-        );
-      }
-    }
-  } catch (error) {
-    bot.sendMessage(chatId, 'Не удалось подписаться на обновления погоды.');
+  if (match[1] === '/subscribe') {
+    await handleSubscribe(msg, match, bot, collection, schedule);
+  } else if (match[1] === '/unsubscribe') {
+    await handleUnsubscribe(msg, match, bot, collection, schedule);
   }
 });
 bot.onText(/\/createTask/, async (createTaskMsg) => {
