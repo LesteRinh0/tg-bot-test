@@ -1,30 +1,14 @@
 import axios from 'axios';
-import express from 'express';
-import { MongoClient } from 'mongodb';
-import mongoose from 'mongoose';
 import schedule from 'node-schedule';
-import TelegramApi from 'node-telegram-bot-api';
 
 import { key } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
+import { client, collection } from './mongoConfig.js';
+import { bot } from './botConfig.js';
+import { server } from './serverConfig.js';
 
-const app = express();
-
-app.get('/', (res) => {
-  res.json({ version: '1.0.0' });
-});
-
-const server = app.listen(key.port || 5000, () => {
-  const host = server.address().address;
-  const { port } = server.address();
-  console.log('Web server started at http://%s:%s', host, port);
-});
-mongoose.connect(key.url).then(() => console.log('Connected!'));
-const client = new MongoClient(key.url);
-const bot = new TelegramApi(key.token, { polling: true });
 client.connect();
-const db = client.db('bot');
-const collection = db.collection('subscribers');
+server();
 
 bot.setMyCommands([
   { command: '/help', description: 'Список команд' },
