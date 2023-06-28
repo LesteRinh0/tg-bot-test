@@ -1,4 +1,4 @@
-export async function createTask(createTaskMsg, bot) {
+export async function createTask(createTaskMsg) {
     const chatId = createTaskMsg.chat.id;
   
     await bot.sendMessage(chatId, 'Введите задачу:').then(() => {
@@ -45,7 +45,7 @@ export async function createTask(createTaskMsg, bot) {
     });
   }
 
-export async function setReminder(callbackQuery, bot) {
+export async function setReminder(callbackQuery) {
     const { data } = callbackQuery;
     const msg = callbackQuery.message;
     const everyHour = '0 * * * *';
