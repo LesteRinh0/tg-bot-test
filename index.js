@@ -12,7 +12,7 @@ import { createTask } from './src/saveTask.js';
 import { app } from './src/serverConfig.js';
 
 client.connect();
-app.listen(keys.port || 5000, () => {
+const server = app.listen(keys.port || 5000, () => {
   const host = server.address().address;
   const { port } = server.address();
   console.log('Web server started at http://%s:%s', host, port);
