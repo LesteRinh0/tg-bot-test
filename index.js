@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import schedule from 'node-schedule';
 import TelegramApi from 'node-telegram-bot-api';
 
-import { key, dog_url, cat_url } from './src/constants.js';
+import { key } from './src/constants.js';
 import { everyDayNotify } from './src/subscribe.js';
 
 const app = express();
@@ -89,13 +89,13 @@ bot.onText(/(.+)/, async (msg, match) => {
     }
 
     if (text === '/cat') {
-      const response = await axios.get(cat_url);
+      const response = await axios.get(key.cat_url);
       const cat = response.data.data.url;
       await bot.sendPhoto(chatId, cat);
     }
 
     if (text === '/dog') {
-      const response = await axios.get(dog_url);
+      const response = await axios.get(key.dog_url);
       const dog = response.data.message;
       await bot.sendPhoto(chatId, dog);
     }
