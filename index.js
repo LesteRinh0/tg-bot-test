@@ -8,7 +8,7 @@ import { processCommand } from './src/mainFunctions.js';
 import { getRecommendations } from './src/recommendFunc.js';
 import { sendErrorMessage } from './src/recommendFunc.js';
 import { handleSubscribe, handleUnsubscribe } from './src/sub-unsub-functions.js';
-import { createTask, setReminder } from './src/saveTask.js';
+import { createTask } from './src/saveTask.js';
 
 client.connect();
 
