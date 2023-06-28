@@ -118,9 +118,7 @@ bot.onText(/(.+)/, async (msg, match) => {
 bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
-  let response = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`
-  );
+  let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key.weather_api}&units=metric`);
   const { lon, lat } = response.data.coord;
   const keyboard = {
     reply_markup: {
@@ -149,9 +147,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
 
     if (category) {
       try {
-        response = await axios.get(
-          `https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`
-        );
+        response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&bias=proximity:${lon},${lat}&limit=10&apiKey=${key.place_api}`);
         let value;
         if (category === 'commercial') {
           value = 'Супер-маркеты';
@@ -170,7 +166,6 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
         bot.sendMessage(
           chatId,
           `Предлагаю вам следующие ${value}:
-
 ${result}`
         );
       } catch (error) {
