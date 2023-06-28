@@ -3,39 +3,39 @@ import { links } from './constants.js';
 import { commands } from './helpers.js';
 
 export async function processCommand(text, chatId, bot, msg) {
-    if (commands.isStartCommand) {
+    if (commands.isStartCommand(text)) {
       bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
-    } else if (commands.isWeatherCommand) {
+    } else if (commands.isWeatherCommand(text)) {
       bot.sendMessage(
         chatId,
         'Не введен город при вызове команды! Пример: /weather Минск'
       );
-    } else if (commands.isRecommendCommand) {
+    } else if (commands.isRecommendCommand(text)) {
       bot.sendMessage(
         chatId,
         'Не введен город при вызове команды! Пример: /recommend Минск'
       );
-    } else if (commands.isSubscribeCommand) {
+    } else if (commands.isSubscribeCommand(text)) {
       bot.sendMessage(
         chatId,
         'Не введен город при вызове команды! Пример: /subscribe Минск'
       );
-    } else if (commands.isUnsubscribeCommand) {
+    } else if (commands.isUnsubscribeCommand(text)) {
       bot.sendMessage(
         chatId,
         'Не введен город при вызове команды! Пример: /unsubscribe Минск'
       );
-    } else if (commands.isCatCommand) {
-      const response = await axios.get(links.cat_url);
-      const cat = response.data.data.url;
-      await bot.sendPhoto(chatId, cat);
-    } else if (commands.isDogCommand) {
-      const response = await axios.get(links.dog_url);
-      const dog = response.data.message;
-      await bot.sendPhoto(chatId, dog);
-    } else if (commands.isHelpCommand) {
-      bot.sendMessage(
-        chatId,
+    } else if (commands.isCatCommand(text)) {
+        const response = await axios.get(links.cat_url);
+        const cat = response.data.data.url;
+        await bot.sendPhoto(chatId, cat);
+    } else if (commands.isDogCommand(text)) {
+        const response = await axios.get(links.dog_url);
+        const dog = response.data.message;
+        await bot.sendPhoto(chatId, dog);
+    } else if (commands.isHelpCommand(text)) {
+        bot.sendMessage(
+          chatId,
         `Стандартные команды представлены в меню!
   Дополнительные команды:
   /subscribe *Город* - подписка на ежедневные уведомления о погоде введенного города;
