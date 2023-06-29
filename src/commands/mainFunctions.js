@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { links } from './constants.js';
-import { commands } from './helpers.js';
+import { links } from '../constants/constants.js';
+import { commands } from '../helpers/helpers.js';
 
 export async function processCommand(text, chatId, bot, msg) {
     if (commands.isStartCommand(text)) {

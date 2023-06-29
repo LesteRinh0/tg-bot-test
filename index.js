@@ -1,16 +1,16 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, links } from './src/constants.js';
-import { client, collection } from './src/mongoConfig.js';
-import { bot } from './src/botConfig.js';
-import { processCommand } from './src/mainFunctions.js';
-import { getRecommendations } from './src/recommendFunc.js';
-import { sendErrorMessage } from './src/recommendFunc.js';
-import { handleSubscribe, handleUnsubscribe } from './src/sub-unsub-functions.js';
-import { createTask } from './src/saveTask.js';
-import { app } from './src/serverConfig.js';
-import gracefulShutdown from './src/gracefulShutdown.js';
+import { keys, links } from './src/constants/constants.js';
+import { client, collection } from './src/configs/mongoConfig.js';
+import { bot } from './src/configs/botConfig.js';
+import { processCommand } from './src/commands/mainFunctions.js';
+import { getRecommendations } from './src/commands/recommendFunc.js';
+import { sendErrorMessage } from './src/commands/recommendFunc.js';
+import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-functions.js';
+import { createTask } from './src/commands/saveTask.js';
+import { app } from './src/configs/serverConfig.js';
+import gracefulShutdown from './src/commands/gracefulShutdown.js';
 
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
@@ -85,11 +85,14 @@ ${result}`
     sendErrorMessage(chatId, bot);
   }
 });
-bot.onText(/(\/subscribe|\/unsubscribe) (.+)/, async (msg, match) => {
+bot.onText(/\/subscribe (.+)/, async (msg, match) => {
   if (match[1] === '/subscribe') {
     await handleSubscribe(msg, match, bot, collection, schedule);
   } else if (match[1] === '/unsubscribe') {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
   }
+});
+bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
+    await handleUnsubscribe(msg, match, bot, collection, schedule);
 });
 bot.onText(/\/createTask/, createTask);

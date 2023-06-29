@@ -1,6 +1,6 @@
 import schedule from 'node-schedule';
-import { bot } from './botConfig.js';
-import { collection } from './mongoConfig.js';
+import { bot } from '../configs/botConfig.js';
+import { collection } from '../configs/mongoConfig.js';
 
 export async function createTask(createTaskMsg) {
     const chatId = createTaskMsg.chat.id;
