@@ -27,7 +27,7 @@ export async function processCommand(text, chatId, bot, msg) {
       await sendDogPhoto(chatId, bot, axios, links.dog_url);
       break;
     case commands.isHelpCommand(text):
-      await sendHelpMessage(chatId, bot);
+      await sendHelpMessage(chatId, bot, text);
       break;
     default:
       break;

@@ -1,5 +1,4 @@
-import { messageHelp } from "../constants/constants.js";
-  
+ 
   export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
   }
@@ -23,6 +22,15 @@ import { messageHelp } from "../constants/constants.js";
     await bot.sendPhoto(chatId, dog);
   }
   
-  export async function sendHelpMessage(chatId, message, bot) {
-    bot.sendMessage(chatId, messageHelp);
-}
+  export async function sendHelpMessage(chatId, bot) {
+    bot.sendMessage(
+      chatId,
+      `Стандартные команды представлены в меню!
+    Дополнительные команды:
+    /subscribe *Город* - подписка на ежедневные уведомления о погоде введенного города;
+    /unsubscribe *Город* - отписка от ежедневных уведомлений о погоде введенного города;
+    /weather *Город* - сведения о погоде выбранного города;
+    /recommend *Город* - рекомендации по местам, которые можно посетить в введенном городе
+    /createTask - создание задач и напоминаний`
+    );
+  }
