@@ -1,7 +1,8 @@
 import { collection } from "../configs/mongoConfig.js";
+import { bot } from '../configs/botConfig.js';
 
-export async function viewTasks(msg, bot) {
-    const chatId = msg.chat.id
+export async function viewTasks(msg) {
+    const chatId = msg.chat.id;
     try {
         const tasks = await collection.find({ id: chatId }).toArray();
         let tasksMsg = 'Ваши задачи:\n\n';
