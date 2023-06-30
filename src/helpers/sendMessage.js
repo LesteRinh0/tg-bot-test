@@ -1,4 +1,6 @@
- 
+ import { goose } from "../configs/mongoConfig";
+  
+  
   export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
   }
@@ -8,6 +10,11 @@
       chatId,
       `Не введен город при вызове команды! Пример: ${command} Минск`
     );
+    const city = mongoose.model('City', { id: Number, name: String });
+    const collection = city.collection;
+    const cities = await collection.find({}).toArray();
+    const cityNames = cities.map(city => city.name);
+    bot.sendMessage(chatId, `Cписок ваших подписок: ${cityNames}`)
   }
   
   export async function sendCatPhoto(chatId, bot, axios, catUrl) {

@@ -87,7 +87,7 @@ ${result}`
 });
 bot.onText(/\/subscribe (.+)/, async (msg, match) => {
     await handleSubscribe(msg, match, bot, collection, schedule);
-  });
+});
 bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
 });
