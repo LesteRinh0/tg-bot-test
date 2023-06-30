@@ -1,4 +1,4 @@
- import { goose } from "../configs/mongoConfig";
+import mongoose from "mongoose";
   
   
   export async function notifyStartCommand(chatId, bot, firstName) {
