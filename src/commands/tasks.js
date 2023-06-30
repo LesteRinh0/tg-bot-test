@@ -7,7 +7,7 @@ export async function viewTasks(msg) {
     try {
         const tasks = await collection.find({ id: chatId, task: { $exists: true } }).toArray();
         let tasksMsg = 'Ваши задачи:\n\n';;
-        if (!!tasks[0].task) {
+        if (!tasks[0].task) {
             tasksMsg = 'У вас нету запланированных задач';
         } else {
             tasks.forEach((task) => {
@@ -15,6 +15,6 @@ export async function viewTasks(msg) {
         }       
         bot.sendMessage(chatId, tasksMsg);
     } catch (error) {
-        sendErrorMessage();
+        sendErrorMessage(chatId, bot);
     }
 }
