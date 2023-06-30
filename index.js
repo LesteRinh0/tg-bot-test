@@ -102,4 +102,4 @@ bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
 
 bot.onText(/\/createTask/, createTask);
 
-bot.onText(/\/tasks/, viewTasks);
+bot.onText(/\/tasks/, viewTasks(bot));
