@@ -2,7 +2,7 @@ import axios from 'axios';
 import schedule from 'node-schedule';
 
 import { keys, links } from './src/constants/constants.js';
-//import { client, collection } from './src/configs/mongoConfig.js';
+import { client, collection } from './src/configs/mongoConfig.js';
 import { bot } from './src/configs/botConfig.js';
 import { processCommand } from './src/commands/mainFunctions.js';
 import { getRecommendations } from './src/commands/recommendFunc.js';
@@ -11,7 +11,6 @@ import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-fun
 import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
-//import { Mongo } from './src/configs/mongoConfig.js';
 import pkg from 'mongodb';
 
 
