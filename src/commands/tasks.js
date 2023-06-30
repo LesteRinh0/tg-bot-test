@@ -1,4 +1,4 @@
-import { collection } from "../configs/mongoConfig";
+import { collection } from "../configs/mongoConfig.js";
 
 export async function viewTasks(chatId) {
     try {
