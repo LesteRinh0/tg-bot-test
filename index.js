@@ -11,6 +11,7 @@ import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-fun
 import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
+import { viewTasks } from './src/commands/tasks.js';
 
 
 process.on('unhandledRejection', (error) => {
@@ -22,6 +23,7 @@ process.on('uncaughtException', (error) => {
 process.on('SIGINT', gracefulShutdown);
 
 client.connect();
+
 const server = app.listen(keys.port || 5000, () => {
   const host = server.address().address;
   const { port } = server.address();
@@ -34,6 +36,7 @@ bot.setMyCommands([
   { command: '/cat', description: 'Случайное изображение кота' },
   { command: '/dog', description: 'Случайное изображение собаки' },
 ]);
+
 bot.onText(/\/weather (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
@@ -48,12 +51,14 @@ bot.onText(/\/weather (.+)/, async (msg, match) => {
     sendErrorMessage(chatId, bot);
   }
 });
+
 bot.onText(/(.+)/, async (msg, match) => {
   const text = match[1];
   const chatId = msg.chat.id;
 
   processCommand(text, chatId, bot, msg);
 });
+
 bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
@@ -86,10 +91,15 @@ ${result}`
     sendErrorMessage(chatId, bot);
   }
 });
+
 bot.onText(/\/subscribe (.+)/, async (msg, match) => {
     await handleSubscribe(msg, match, bot, collection, schedule);
 });
+
 bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
 });
+
 bot.onText(/\/createTask/, createTask);
+
+bot.onText(/\/tasks/, viewTasks);
