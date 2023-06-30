@@ -4,7 +4,7 @@ import { bot } from '../configs/botConfig.js';
 export async function viewTasks(msg) {
     const chatId = msg.chat.id;
     try {
-        const tasks = await collection.find({ id: chatId }).toArray();
+        const tasks = await collection.find({ id: chatId, task: { $exists: true } }).toArray();
         let tasksMsg = 'Ваши задачи:\n\n';;
         if (tasks.task === undefined) {
             tasksMsg = 'У вас нету запланированных задач';
