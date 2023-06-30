@@ -9,7 +9,7 @@ import { collection } from "../configs/mongoConfig.js";
       chatId,
       `Не введен город при вызове команды! Пример: ${command} Минск`
     );
-    if(command == '/unsubscribe'){
+    //if(command == '/unsubscribe'){
         collection.find({ id: chatId }).toArray((err, documents) => {
             if (err) {
               bot.sendMessage(`${err}`)
@@ -17,8 +17,8 @@ import { collection } from "../configs/mongoConfig.js";
             const cities = documents.map(doc => doc.city);
             bot.sendMessage(`Список городов на которые подписаны: ${cities}`);
           });
-        };
-    bot.sendMessage(chatId, `Cписок ваших подписок: ${cityNames}`) 
+      //  };
+    bot.sendMessage(chatId, `Cписок ваших подписок: ${cityNames}`);
   }
 
   export async function sendCatPhoto(chatId, bot, axios, catUrl) {
