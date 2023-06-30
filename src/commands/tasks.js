@@ -5,9 +5,9 @@ export async function viewTasks(msg) {
     const chatId = msg.chat.id;
     try {
         const tasks = await collection.find({ id: chatId }).toArray();
-        let tasksMsg = `Ваши задачи:${tasks.task}`;
+        let tasksMsg = 'Ваши задачи:\n\n';;
         if (tasks.task === undefined) {
-            tasksMsg += 'У вас нету запланированных задач';
+            tasksMsg = 'У вас нету запланированных задач';
         } else {
             tasks.forEach((task) => {
                     tasksMsg += `• ${task.task}\n`;});
