@@ -1,4 +1,4 @@
-import { messageHelp } from "../constants/constants";
+import { messageHelp } from "../constants/constants.js";
   
   export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
