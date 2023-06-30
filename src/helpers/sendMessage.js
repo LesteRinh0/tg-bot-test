@@ -1,19 +1,9 @@
-import { collection } from "../configs/mongoConfig.js";  
   
   export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
   }
   
   export async function notifyMissingCity(chatId, bot, command) {
-        //if(command == '/unsubscribe'){
-        await collection.find({ id: chatId }).toArray((err, documents) => {
-            if (err) {
-              bot.sendMessage(`${err}`)
-            }
-            const cities = documents.map(doc => doc.city);
-            bot.sendMessage(`Список городов на которые подписаны: ${cities}`);
-          });
-      //  };
     bot.sendMessage(
       chatId,
       `Не введен город при вызове команды! Пример: ${command} Минск`
