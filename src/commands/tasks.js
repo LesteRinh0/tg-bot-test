@@ -1,5 +1,6 @@
 import { collection } from "../configs/mongoConfig.js";
 import { bot } from '../configs/botConfig.js';
+import { sendErrorMessage } from "./recommendFunc.js";
 
 export async function viewTasks(msg) {
     const chatId = msg.chat.id;
@@ -14,6 +15,6 @@ export async function viewTasks(msg) {
         }       
         bot.sendMessage(chatId, tasksMsg);
     } catch (error) {
-        bot.sendMessage(chatId, `Ошибка при просмотре задач.${tasks[0].task}`);
+        sendErrorMessage();
     }
 }
