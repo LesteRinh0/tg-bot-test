@@ -6,11 +6,15 @@ export async function viewTasks(msg) {
     try {
         const tasks = await collection.find({ id: chatId }).toArray();
         let tasksMsg = 'Ваши задачи:\n\n';
-        tasks.forEach((task) => {
-            if(task != "undefined"){
-            tasksMsg += `• ${task.task}\n`;
-            }
-        });
+        if (tasks.length === 0) {
+            tasksMsg += 'У вас нету запланированных задач';
+        } else {
+            tasks.forEach((task) => {
+                if (task.task !== undefined) {
+                    tasksMsg += `• ${task.task}\n`;
+                }
+            });
+        }       
         bot.sendMessage(chatId, tasksMsg);
     } catch (error) {
         bot.sendMessage(chatId, 'Ошибка при просмотре задач.');
