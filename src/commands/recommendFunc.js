@@ -26,9 +26,11 @@ function getCategoryUrlAndValue(category, lon, lat) {
 
   return { url, value };
 }
+
 export function sendErrorMessage(chatId, bot) {
   bot.sendMessage(chatId, 'Произошла ошибка. Попробуйте еще раз.');
 }
+
 export async function getRecommendations(category, lon, lat, chatId, bot) {
   const { url, value } = getCategoryUrlAndValue(category, lon, lat);
 

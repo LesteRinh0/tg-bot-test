@@ -9,4 +9,4 @@ export const commands = {
     isHelpCommand: (text) => text === '/help'
   };
   
-  export default commands;
+export default commands;

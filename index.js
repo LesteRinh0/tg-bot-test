@@ -17,9 +17,11 @@ import { viewTasks } from './src/commands/tasks.js';
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
 });
+
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
+
 process.on('SIGINT', gracefulShutdown);
 
 client.connect();
