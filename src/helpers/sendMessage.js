@@ -1,4 +1,4 @@
-import { collection } from "../configs/mongoConfig";  
+import { collection } from "../configs/mongoConfig.js";  
   
   export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
