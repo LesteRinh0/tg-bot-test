@@ -10,7 +10,7 @@ import { collection } from "../configs/mongoConfig.js";
       `Не введен город при вызове команды! Пример: ${command} Минск`
     );
     //if(command == '/unsubscribe'){
-        collection.find({ id: chatId }).toArray((err, documents) => {
+        await collection.find({ id: chatId }).toArray((err, documents) => {
             if (err) {
               bot.sendMessage(`${err}`)
             }
