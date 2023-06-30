@@ -7,7 +7,9 @@ export async function viewTasks(msg) {
         const tasks = await collection.find({ id: chatId }).toArray();
         let tasksMsg = 'Ваши задачи:\n\n';
         tasks.forEach((task) => {
+            if(task != "undefined"){
             tasksMsg += `• ${task.task}\n`;
+            }
         });
         bot.sendMessage(chatId, tasksMsg);
     } catch (error) {
