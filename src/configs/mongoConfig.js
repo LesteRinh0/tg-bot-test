@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import { keys } from '../constants/constants.js';
 
-export const goose = mongoose.connect(keys.url).then(() => console.log('Connected!'));
+export const mngoose = mongoose.connect(keys.url);
 
 export const client = new MongoClient(keys.url);
 export const db = client.db('bot');
