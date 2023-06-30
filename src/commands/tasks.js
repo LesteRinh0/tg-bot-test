@@ -14,6 +14,6 @@ export async function viewTasks(msg) {
         }       
         bot.sendMessage(chatId, tasksMsg);
     } catch (error) {
-        bot.sendMessage(chatId, 'Ошибка при просмотре задач.');
+        bot.sendMessage(chatId, `Ошибка при просмотре задач.${tasks[0].task}`);
     }
 }
