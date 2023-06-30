@@ -11,9 +11,11 @@ import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-fun
 import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
-import { Mongo } from './src/configs/mongoConfig.js';
+//import { Mongo } from './src/configs/mongoConfig.js';
+import pkg from 'mongodb';
 
 
+const { MongoClient } = pkg;
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
 });
@@ -97,7 +99,7 @@ bot.onText(/\/createTask/, createTask);
 bot.onText(/\/subCities/, (msg) => {
   const chatId = msg.chat.id;
 
-  Mongo.connect(keys.url, function(err, client) {
+  MongoClient.connect(keys.url, function(err, client) {
     if (err) throw err;
 
     const db = client.db('bot');
