@@ -1,48 +1,35 @@
 import axios from 'axios';
 import { links } from '../constants/constants.js';
 import { commands } from '../helpers/helpers.js';
+import { notifyStartCommand, notifyMissingCity, sendCatPhoto, sendDogPhoto, sendHelpMessage } from '../helpers/sendMessage.js';
 
 export async function processCommand(text, chatId, bot, msg) {
-    if (commands.isStartCommand(text)) {
-      bot.sendMessage(chatId, `Добро пожаловать ${msg.chat.first_name}!`);
-    } else if (commands.isWeatherCommand(text)) {
-      bot.sendMessage(
-        chatId,
-        'Не введен город при вызове команды! Пример: /weather Минск'
-      );
-    } else if (commands.isRecommendCommand(text)) {
-      bot.sendMessage(
-        chatId,
-        'Не введен город при вызове команды! Пример: /recommend Минск'
-      );
-    } else if (commands.isSubscribeCommand(text)) {
-      bot.sendMessage(
-        chatId,
-        'Не введен город при вызове команды! Пример: /subscribe Минск'
-      );
-    } else if (commands.isUnsubscribeCommand(text)) {
-      bot.sendMessage(
-        chatId,
-        'Не введен город при вызове команды! Пример: /unsubscribe Минск'
-      );
-    } else if (commands.isCatCommand(text)) {
-        const response = await axios.get(links.cat_url);
-        const cat = response.data.data.url;
-        await bot.sendPhoto(chatId, cat);
-    } else if (commands.isDogCommand(text)) {
-        const response = await axios.get(links.dog_url);
-        const dog = response.data.message;
-        await bot.sendPhoto(chatId, dog);
-    } else if (commands.isHelpCommand(text)) {
-        bot.sendMessage(
-          chatId,
-        `Стандартные команды представлены в меню!
-  Дополнительные команды:
-  /subscribe *Город* - подписка на ежедневные уведомления о погоде введенного города;
-  /unsubscribe *Город* - отписка от ежедневных уведомлений о погоде введенного города;
-  /weather *Город* - сведения о погоде выбранного города;
-  /recommend *Город* - рекомендации по местам, которые можно посетить в введенном городе
-  /createTask - создание задач и напоминаний`
-      );
-    }
+  switch (true) {
+    case commands.isStartCommand(text):
+      await notifyStartCommand(chatId, bot, msg.chat.first_name);
+      break;
+    case commands.isWeatherCommand(text):
+      await notifyMissingCity(chatId, bot, "/weather");
+      break;
+    case commands.isRecommendCommand(text):
+      await notifyMissingCity(chatId, bot, "/recommend");
+      break;
+    case commands.isSubscribeCommand(text):
+      await notifyMissingCity(chatId, bot, "/subscribe");
+      break;
+    case commands.isUnsubscribeCommand(text):
+      await notifyMissingCity(chatId, bot, "/unsubscribe");
+      break;
+    case commands.isCatCommand(text):
+      await sendCatPhoto(chatId, bot, axios, links.cat_url);
+      break;
+    case commands.isDogCommand(text):
+      await sendDogPhoto(chatId, bot, axios, links.dog_url);
+      break;
+    case commands.isHelpCommand(text):
+      await sendHelpMessage(chatId, bot);
+      break;
+    default:
+      break;
   }
+}
