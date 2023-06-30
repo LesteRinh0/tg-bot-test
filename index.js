@@ -86,12 +86,8 @@ ${result}`
   }
 });
 bot.onText(/\/subscribe (.+)/, async (msg, match) => {
-  if (match[1] === '/subscribe') {
     await handleSubscribe(msg, match, bot, collection, schedule);
-  } else if (match[1] === '/unsubscribe') {
-    await handleUnsubscribe(msg, match, bot, collection, schedule);
-  }
-});
+  });
 bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
 });
