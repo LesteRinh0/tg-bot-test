@@ -4,8 +4,8 @@ import { sendErrorMessage } from './recommendFunc.js';
 
 export async function handleSubscribe(msg, match, bot, collection, schedule) {
     const chatId = msg.chat.id;
-    const cityName = match[2];
-    bot.sendMessage(chatId, `${match[2]}`);
+    const cityName = match[1];
+    bot.sendMessage(chatId, `${match[1]}`);
   
     try {
       const user = await collection.findOne({ id: chatId, city: cityName });
