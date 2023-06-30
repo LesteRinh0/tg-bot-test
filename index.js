@@ -11,6 +11,7 @@ import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-fun
 import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
+import { Mongo } from './src/configs/mongoConfig.js';
 
 
 process.on('unhandledRejection', (error) => {
@@ -93,3 +94,36 @@ bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
     await handleUnsubscribe(msg, match, bot, collection, schedule);
 });
 bot.onText(/\/createTask/, createTask);
+bot.onText(/\/subCities/, (msg) => {
+  const chatId = msg.chat.id;
+
+  Mongo.connect(keys.url, function(err, client) {
+    if (err) throw err;
+
+    const db = client.db('bot');
+
+    db.collection("bot").findOne({ id: chatId }, function(err, user) {
+      if (err) throw err;
+
+      if (user) {
+        const cityId = user.city._id;
+
+        db.collection("cities").findOne({ _id: cityId }, function(err, city) {
+          if (err) throw err;
+
+          if (city) {
+            const cityName = city.city;
+            bot.sendMessage(msg.chat.id, "Город: " + cityName);
+          } else {
+            bot.sendMessage(msg.chat.id, "Город не найден");
+          }
+
+          client.close();
+        });
+      } else {
+        bot.sendMessage(msg.chat.id, "Пользователь не найден");
+        client.close();
+      }
+    });
+  });
+});
