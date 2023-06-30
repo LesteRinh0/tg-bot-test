@@ -96,27 +96,27 @@ bot.onText(/\/createTask/, createTask);
 bot.onText(/\/subCities/, (msg) => {
   const chatId = msg.chat.id;
 
-    db.collection("bot").findOne({ id: chatId }, function(err, user) {
-      if (err) throw err;
+  db.collection("bot").findOne({ id: chatId }, function(err, user) {
+    if (err) throw err;
 
-      if (user) {
-        const cityId = user.city._id;
+    if (user) {
+      const cityId = user.city._id;
 
-        dbo.collection("cities").findOne({ _id: cityId }, function(err, city) {
-          if (err) throw err;
+      db.collection("cities").findOne({ _id: cityId }, function(err, city) {
+        if (err) throw err;
 
-          if (city) {
-            const cityName = city.city;
-            bot.sendMessage(msg.chat.id, "Город: " + cityName);
-          } else {
-            bot.sendMessage(msg.chat.id, "Город не найден");
-          }
+        if (city) {
+          const cityName = city.city;
+          bot.sendMessage(msg.chat.id, "Город: " + cityName);
+        } else {
+          bot.sendMessage(msg.chat.id, "Город не найден");
+        }
 
-          db.close();
-        });
-      } else {
-        bot.sendMessage(msg.chat.id, "Пользователь не найден");
         db.close();
-      }
-    });
+      });
+    } else {
+      bot.sendMessage(msg.chat.id, "Пользователь не найден");
+      db.close();
+    }
   });
+});
