@@ -5,11 +5,7 @@ import { collection } from "../configs/mongoConfig.js";
   }
   
   export async function notifyMissingCity(chatId, bot, command) {
-    bot.sendMessage(
-      chatId,
-      `Не введен город при вызове команды! Пример: ${command} Минск`
-    );
-    //if(command == '/unsubscribe'){
+        //if(command == '/unsubscribe'){
         await collection.find({ id: chatId }).toArray((err, documents) => {
             if (err) {
               bot.sendMessage(`${err}`)
@@ -18,7 +14,10 @@ import { collection } from "../configs/mongoConfig.js";
             bot.sendMessage(`Список городов на которые подписаны: ${cities}`);
           });
       //  };
-    bot.sendMessage(chatId, `Cписок ваших подписок: ${cityNames}`);
+    bot.sendMessage(
+      chatId,
+      `Не введен город при вызове команды! Пример: ${command} Минск`
+    );
   }
 
   export async function sendCatPhoto(chatId, bot, axios, catUrl) {
