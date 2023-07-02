@@ -22,6 +22,7 @@ export async function notifyMissingCity(chatId, bot, command) {
         }       
         bot.sendMessage(chatId, cityMsg);
     } catch (error) {
+        bot.sendMessage(chatId, `${error}`);
         sendErrorMessage(chatId, bot);
     }
     }
