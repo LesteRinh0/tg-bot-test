@@ -1,5 +1,5 @@
 import { collection } from "../configs/mongoConfig.js";
-import { sendErrorMessage } from "./recommendFunc.js";
+import { sendErrorMessage } from "../commands/recommendFunc.js";
 
 export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
