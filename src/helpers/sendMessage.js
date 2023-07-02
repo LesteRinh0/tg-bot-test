@@ -17,7 +17,7 @@ export async function notifyMissingCity(chatId, bot, command) {
         if (cities.length === 0) {
             cityMsg = 'У вас нету активных подписок на города';
         } else {
-            tasks.forEach((city) => {
+            cities.forEach((city) => {
                     cityMsg += `• ${city.city}\n`;});
         }       
         bot.sendMessage(chatId, cityMsg);
