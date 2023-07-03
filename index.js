@@ -1,12 +1,9 @@
-import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, links, keyboardOptions } from './src/constants/constants.js';
+import { keys } from './src/constants/constants.js';
 import { client, collection } from './src/configs/mongoConfig.js';
 import { bot } from './src/configs/botConfig.js';
 import { processCommand } from './src/commands/mainFunctions.js';
-import { getRecommendations } from './src/commands/recommendFunc.js';
-import { sendErrorMessage } from './src/commands/recommendFunc.js';
 import { handleSubscribe, handleUnsubscribe } from './src/commands/sub-unsub-functions.js';
 import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
