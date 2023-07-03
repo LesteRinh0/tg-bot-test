@@ -13,6 +13,7 @@ import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
 import { viewTasks } from './src/commands/tasks.js';
 import { sendWeather } from './src/commands/sendWeather.js';
+import { recommendCity } from './src/commands/recommendCity.js';
 
 
 process.on('unhandledRejection', (error) => {
@@ -53,22 +54,8 @@ bot.onText(/(.+)/, async (msg, match) => {
   processCommand(text, chatId, bot, msg);
 });
 
-bot.onText(/\/recommend (.+)/, async (msg, match) => {
-  const chatId = msg.chat.id;
-  const cityName = match[1];
-  try {
-    let response = await axios.get(`${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`);
-    const { lon, lat } = response.data.coord;
-
-    bot.sendMessage(chatId, 'Выберите категорию:', keyboardOptions);
-
-    bot.once('message', async (categoryMsg) => {
-      const result = await getRecommendations(categoryMsg.text, lon, lat, chatId, bot);
-      bot.sendMessage(chatId, `Предлагаю вам следующие ${categoryMsg.text}:\n${result}`);
-    });
-  } catch (error) {
-    sendErrorMessage(chatId, bot);
-  }
+bot.onText(/\/recommend (.+)/, (msg, match) => {
+  recommendCity(bot, msg, match);
 });
 
 bot.onText(/\/subscribe (.+)/, async (msg, match) => {
