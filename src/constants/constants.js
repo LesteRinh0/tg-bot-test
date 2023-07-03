@@ -12,7 +12,7 @@ export const links = {
   weatherAPI: 'https://api.openweathermap.org/data/2.5/weather',
   dog_url: 'https://dog.ceo/api/breeds/image/random',
   cat_url: 'https://meow.senither.com/v1/random'
-}
+  };
 
 export const keyboardOptions = {
   reply_markup: {
@@ -23,4 +23,4 @@ export const keyboardOptions = {
       ['Гостиницы'],
     ],
   },
-};
+  };

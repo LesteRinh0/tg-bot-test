@@ -1,6 +1,6 @@
 import { everyDayNotify } from "./subscribe.js";
-import { sendErrorMessage } from './recommendFunc.js';
 import { checkCityWeather } from "../helpers/checkCityWeather.js";
+import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
 export async function handleSubscribe(msg, match, bot, collection, schedule) {
   const chatId = msg.chat.id;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { links, keys, keyboardOptions } from "../constants/constants.js";
 import { getRecommendations } from "./recommendFunc.js";
-import { sendErrorMessage } from "./recommendFunc.js";
+import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
 export async function recommendCity(bot, msg, match) {
     const chatId = msg.chat.id;

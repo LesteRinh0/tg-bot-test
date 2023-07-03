@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { links, keys } from "../constants/constants.js";
-import { sendErrorMessage } from "./recommendFunc.js";
+import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
 export async function sendWeather(chatId, cityName, bot) {
     const link = `${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`;

@@ -1,6 +1,6 @@
 import { collection } from "../configs/mongoConfig.js";
 import { bot } from '../configs/botConfig.js';
-import { sendErrorMessage } from "./recommendFunc.js";
+import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
 export async function viewTasks(msg) {
     const chatId = msg.chat.id;
