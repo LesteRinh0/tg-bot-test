@@ -1,32 +1,32 @@
 import axios from 'axios';
 import { links } from '../constants/constants.js';
-import { commands } from '../helpers/helpers.js';
+import { isStartCommand, isCatCommand, isDogCommand, isHelpCommand, isRecommendCommand, isSubscribeCommand, isUnsubscribeCommand, isWeatherCommand } from '../helpers/helpers.js';
 import { notifyStartCommand, notifyMissingCity, sendCatPhoto, sendDogPhoto, sendHelpMessage } from '../helpers/sendMessage.js';
 
 export async function processCommand(text, chatId, bot, msg) {
   switch (true) {
-    case commands.isStartCommand(text):
+    case isStartCommand(text):
       await notifyStartCommand(chatId, bot, msg.chat.first_name);
       break;
-    case commands.isWeatherCommand(text):
+    case isWeatherCommand(text):
       await notifyMissingCity(chatId, bot, "/weather");
       break;
-    case commands.isRecommendCommand(text):
+    case isRecommendCommand(text):
       await notifyMissingCity(chatId, bot, "/recommend");
       break;
-    case commands.isSubscribeCommand(text):
+    case isSubscribeCommand(text):
       await notifyMissingCity(chatId, bot, "/subscribe");
       break;
-    case commands.isUnsubscribeCommand(text):
+    case isUnsubscribeCommand(text):
       await notifyMissingCity(chatId, bot, "/unsubscribe");
       break;
-    case commands.isCatCommand(text):
+    case isCatCommand(text):
       await sendCatPhoto(chatId, bot, axios, links.cat_url);
       break;
-    case commands.isDogCommand(text):
+    case isDogCommand(text):
       await sendDogPhoto(chatId, bot, axios, links.dog_url);
       break;
-    case commands.isHelpCommand(text):
+    case isHelpCommand(text):
       await sendHelpMessage(chatId, bot, text);
       break;
     default:

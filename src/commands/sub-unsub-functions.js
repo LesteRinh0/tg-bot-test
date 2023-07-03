@@ -1,38 +1,36 @@
 import { everyDayNotify } from "./subscribe.js";
 import { sendErrorMessage } from './recommendFunc.js';
-
+import { checkCityWeather } from "../helpers/checkCityWeather.js";
 
 export async function handleSubscribe(msg, match, bot, collection, schedule) {
-    const chatId = msg.chat.id;
-    const cityName = match[1];
-  
-    try {
-      const user = await collection.findOne({ id: chatId, city: cityName });
-      if (user) {
-        bot.sendMessage(
-          chatId,
-          `Вы уже подписаны на уведомления о погоде города ${cityName}.`
-        );
-      } else {
-        schedule.scheduleJob(
-          'timer',
-          '0 9 * * *',
-          everyDayNotify(bot, cityName, chatId)
-        );
-        bot.sendMessage(
-          chatId,
-          `Вы подписались на ежедневные уведомления о погоде города ${cityName}`
-        );
-        collection.insertOne({
-          id: chatId,
-          city: cityName,
-          name: msg.chat.first_name,
-        });
-      }
-    } catch (error) {
-        sendErrorMessage(chatId, bot);
+  const chatId = msg.chat.id;
+  const cityName = match[1];
+
+  try {
+    const cityExists = await checkCityWeather(cityName);
+
+    if (!cityExists) {
+      bot.sendMessage(chatId, 'Указанный город не существует. Пожалуйста, проверьте правильность написания и повторите попытку.');
+      return;
     }
+
+    const user = await collection.findOne({ id: chatId, city: cityName });
+
+    if (user) {
+      bot.sendMessage(chatId, `Вы уже подписаны на уведомления о погоде города ${cityName}.`);
+    } else {
+      schedule.scheduleJob('timer', '0 9 * * *', everyDayNotify(bot, cityName, chatId));
+      bot.sendMessage(chatId, `Вы подписались на ежедневные уведомления о погоде города ${cityName}`);
+      collection.insertOne({
+        id: chatId,
+        city: cityName,
+        name: msg.chat.first_name
+      });
+    }
+  } catch (error) {
+    sendErrorMessage(chatId, bot);
   }
+}
   
 export async function handleUnsubscribe(msg, match, bot, collection, schedule) {
     const chatId = msg.chat.id;
