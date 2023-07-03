@@ -12,6 +12,7 @@ export async function sendWeather(chatId, cityName, bot) {
           bot.sendMessage(chatId, `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`);
         })
     } catch (error) {
+        bot.sendMessage(chatId, `${error}`);
       sendErrorMessage(chatId, bot);
     }
   }
