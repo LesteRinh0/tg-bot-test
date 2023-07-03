@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { keys } from '../constants/constants.js';
+import { sendErrorMessage } from '../helpers/sendErrorMessage.js';
 
 function getCategoryUrlAndValue(category, lon, lat) {
   let url;
