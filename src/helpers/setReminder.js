@@ -1,4 +1,9 @@
-export async function setReminder(callbackQuery) {
+import schedule from 'node-schedule';
+
+import { bot } from '../configs/botConfig.js';
+import { collection } from '../configs/mongoConfig.js';
+
+export async function setReminder() {
     const { data } = callbackQuery;
     const msg = callbackQuery.message;
     const everyHour = '0 * * * *';

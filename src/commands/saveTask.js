@@ -1,4 +1,3 @@
-import schedule from 'node-schedule';
 import { bot } from '../configs/botConfig.js';
 import { collection } from '../configs/mongoConfig.js';
 import { setReminder } from '../helpers/setReminder.js';
@@ -42,7 +41,7 @@ export async function createTask(createTaskMsg) {
               'Хотите получить напоминание о задаче?',
               opts
             );
-            bot.on('callback_query', setReminder(callbackQuery, schedule, bot, collection));
+            bot.on('callback_query', setReminder);
           } catch (error) {
             bot.sendMessage(chatId, 'Ошибка при сохранении задачи.');
           }
