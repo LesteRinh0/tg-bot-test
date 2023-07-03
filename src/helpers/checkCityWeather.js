@@ -1,5 +1,5 @@
 import axios from "axios";
-import { keys, links } from "../constants/constants";
+import { keys, links } from "../constants/constants.js";
 
 export async function checkCityWeather(cityName) {
     const url = `${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`;
