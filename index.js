@@ -12,6 +12,7 @@ import { createTask } from './src/commands/saveTask.js';
 import { app } from './src/configs/serverConfig.js';
 import gracefulShutdown from './src/commands/gracefulShutdown.js';
 import { viewTasks } from './src/commands/tasks.js';
+import { sendWeather } from './src/commands/sendWeather.js';
 
 
 process.on('unhandledRejection', (error) => {
