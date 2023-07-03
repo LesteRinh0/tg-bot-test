@@ -1,4 +1,4 @@
-import { sendErrorMessage } from "../helpers/sendErrorMessage";
+import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
 export async function handleUnsubscribe(msg, match, bot, collection, schedule) {
     const chatId = msg.chat.id;
