@@ -1,7 +1,7 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, links, keyboard } from './src/constants/constants.js';
+import { keys, links, keyboardOptions } from './src/constants/constants.js';
 import { client, collection } from './src/configs/mongoConfig.js';
 import { bot } from './src/configs/botConfig.js';
 import { processCommand } from './src/commands/mainFunctions.js';
@@ -65,22 +65,14 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
   try {
-    let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${keys.weather_api}&units=metric`);
+    let response = await axios.get(`${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`);
     const { lon, lat } = response.data.coord;
-    const keyboard = {
-      reply_markup: { keyboard },
-    };
 
-    bot.sendMessage(chatId, 'Выберите категорию:', keyboard);
+    bot.sendMessage(chatId, 'Выберите категорию:', keyboardOptions);
 
     bot.once('message', async (categoryMsg) => {
       const result = await getRecommendations(categoryMsg.text, lon, lat, chatId, bot);
-      bot.sendMessage(
-          chatId,
-          `Предлагаю вам следующие ${categoryMsg.text}:
-
-${result}`
-        );
+      bot.sendMessage(chatId, `Предлагаю вам следующие ${categoryMsg.text}:\n${result}`);
     });
   } catch (error) {
     sendErrorMessage(chatId, bot);

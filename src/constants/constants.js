@@ -14,9 +14,13 @@ export const links = {
   cat_url: 'https://meow.senither.com/v1/random'
 }
 
-export const keyboard = [
-  ['Супер-маркеты'],
-  ['Рестораны'],
-  ['Активности'],
-  ['Гостиницы'],
-];
+export const keyboardOptions = {
+  reply_markup: {
+    keyboard: [
+      ['Супер-маркеты'],
+      ['Рестораны'],
+      ['Активности'],
+      ['Гостиницы'],
+    ],
+  },
+};
