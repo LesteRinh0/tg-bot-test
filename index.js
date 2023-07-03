@@ -39,19 +39,10 @@ bot.setMyCommands([
   { command: '/dog', description: 'Случайное изображение собаки' },
 ]);
 
-bot.onText(/\/weather (.+)/, async (msg, match) => {
+bot.onText(/\/weather (.+)/, (msg, match) => {
   const chatId = msg.chat.id;
   const cityName = match[1];
-  const link = `${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`;
-  try {
-    const result = await axios.get(link);
-    const { name, weather, main } = result.data;
-    const { description } = weather[0];
-    const { temp } = main;
-    bot.sendMessage(chatId, `В городе ${name} сейчас ${description}. Температура составляет ${temp}°C.`);
-  } catch (error) {
-    sendErrorMessage(chatId, bot);
-  }
+  sendWeather(chatId, cityName, bot);
 });
 
 bot.onText(/(.+)/, async (msg, match) => {
