@@ -42,7 +42,7 @@ export async function createTask(createTaskMsg) {
               'Хотите получить напоминание о задаче?',
               opts
             );
-            bot.on('callback_query', setReminder(schedule, bot, collection));
+            bot.on('callback_query', setReminder(callbackQuery, schedule, bot, collection));
           } catch (error) {
             bot.sendMessage(chatId, 'Ошибка при сохранении задачи.');
           }
