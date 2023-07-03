@@ -1,7 +1,7 @@
 import axios from 'axios';
 import schedule from 'node-schedule';
 
-import { keys, links } from './src/constants/constants.js';
+import { keys, links, keyboard } from './src/constants/constants.js';
 import { client, collection } from './src/configs/mongoConfig.js';
 import { bot } from './src/configs/botConfig.js';
 import { processCommand } from './src/commands/mainFunctions.js';
@@ -68,14 +68,7 @@ bot.onText(/\/recommend (.+)/, async (msg, match) => {
     let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${keys.weather_api}&units=metric`);
     const { lon, lat } = response.data.coord;
     const keyboard = {
-      reply_markup: {
-        keyboard: [
-          ['Супер-маркеты'],
-          ['Рестораны'],
-          ['Активности'],
-          ['Гостиницы'],
-        ],
-      },
+      reply_markup: { keyboard },
     };
 
     bot.sendMessage(chatId, 'Выберите категорию:', keyboard);

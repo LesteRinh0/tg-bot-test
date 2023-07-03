@@ -13,3 +13,10 @@ export const links = {
   dog_url: 'https://dog.ceo/api/breeds/image/random',
   cat_url: 'https://meow.senither.com/v1/random'
 }
+
+export const keyboard = [
+  ['Супер-маркеты'],
+  ['Рестораны'],
+  ['Активности'],
+  ['Гостиницы'],
+];
