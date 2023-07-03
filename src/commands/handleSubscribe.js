@@ -1,6 +1,7 @@
 import { everyDayNotify } from "../helpers/everyDayNotify.js"
 import { checkCityWeather } from "../helpers/checkCityWeather.js";
 import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
+import { notifySubsCity } from "../crons/crons.js";
 
 export async function handleSubscribe(msg, match, bot, collection, schedule) {
   const chatId = msg.chat.id;
@@ -19,7 +20,7 @@ export async function handleSubscribe(msg, match, bot, collection, schedule) {
     if (user) {
       bot.sendMessage(chatId, `Вы уже подписаны на уведомления о погоде города ${cityName}.`);
     } else {
-      schedule.scheduleJob('timer', '0 9 * * *', everyDayNotify(bot, cityName, chatId));
+      schedule.scheduleJob('timer', notifySubsCity, everyDayNotify(bot, cityName, chatId));
       bot.sendMessage(chatId, `Вы подписались на ежедневные уведомления о погоде города ${cityName}`);
       collection.insertOne({
         id: chatId,

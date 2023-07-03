@@ -2,13 +2,11 @@ import schedule from 'node-schedule';
 
 import { bot } from '../configs/botConfig.js';
 import { collection } from '../configs/mongoConfig.js';
+import { firstNotify, secondNotify, thirdNotify } from '../crons/crons.js';
 
 export async function setReminder(callbackQuery) {
     const { data } = callbackQuery;
     const msg = callbackQuery.message;
-    const everyHour = '0 * * * *';
-    const every2Hours = '0 */2 * * *';
-    const every4Hours = '0 */4 * * *';
   
     const opts = {
       chat_id: msg.chat.id,
@@ -22,16 +20,16 @@ export async function setReminder(callbackQuery) {
         inline_keyboard: [
           [
             {
-              text: 'Час',
-              callback_data: `час/${action[1]}`,
+              text: '9:00',
+              callback_data: `9:00/${action[1]}`,
             },
             {
-              text: '2 часа',
-              callback_data: `2 часа/${action[1]}`,
+              text: '14:00',
+              callback_data: `14:00/${action[1]}`,
             },
             {
-              text: '4 часа',
-              callback_data: `4 часа/${action[1]}`,
+              text: '19:00',
+              callback_data: `19:00/${action[1]}`,
             },
           ],
         ],
@@ -46,12 +44,12 @@ export async function setReminder(callbackQuery) {
   
       bot.editMessageText(text, { ...opts, reply_markup: options });
     } else {
-      const text = `Напоминание установлено через ${action[0]}`;
+      const text = `Напоминание установлено в ${action[0]}`;
   
       const taskTime = {
-        час: everyHour,
-        '2 часа': every2Hours,
-        '4 часа': every4Hours,
+        '9:00': firstNotify,
+        '14:00': secondNotify,
+        '19:00': thirdNotify,
       };
   
       schedule.scheduleJob('taskNotif', taskTime[action[0]], async () => {
