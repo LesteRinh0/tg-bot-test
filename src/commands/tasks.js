@@ -17,4 +17,4 @@ export async function viewTasks(msg) {
     } catch (error) {
         sendErrorMessage(chatId, bot);
     }
-}
+  };

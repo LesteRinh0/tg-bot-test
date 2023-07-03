@@ -12,4 +12,4 @@ export const everyDayNotify = (bot, cityName, chatId) => async () => {
     chatId,
     `Уведомление о погоде города ${cityName}: ${description} и ${temperature}°C`
   );
-};
+  };

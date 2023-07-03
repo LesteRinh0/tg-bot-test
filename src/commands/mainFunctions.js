@@ -32,4 +32,4 @@ export async function processCommand(text, chatId, bot, msg) {
     default:
       break;
   }
-}
+};

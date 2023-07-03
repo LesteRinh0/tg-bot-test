@@ -1,4 +1,4 @@
-import { everyDayNotify } from "./subscribe.js";
+import { everyDayNotify } from "../helpers/everyDayNotify.js"
 import { checkCityWeather } from "../helpers/checkCityWeather.js";
 import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 
@@ -30,4 +30,4 @@ export async function handleSubscribe(msg, match, bot, collection, schedule) {
   } catch (error) {
     sendErrorMessage(chatId, bot);
   }
-};
+  };

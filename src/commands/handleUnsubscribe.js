@@ -19,4 +19,4 @@ export async function handleUnsubscribe(msg, match, bot, collection, schedule) {
     } catch (error) {
         sendErrorMessage(chatId, bot);
     }
-  }
+  };

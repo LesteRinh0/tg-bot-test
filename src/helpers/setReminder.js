@@ -63,4 +63,4 @@ export async function setReminder(callbackQuery) {
   
       bot.editMessageText(text, opts);
     }
-  }
+  };

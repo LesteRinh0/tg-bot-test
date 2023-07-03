@@ -3,7 +3,7 @@ import { sendErrorMessage } from "./sendErrorMessage.js";
 
 export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
-  }
+  };
   
 export async function notifyMissingCity(chatId, bot, command) {
     bot.sendMessage(
@@ -26,19 +26,19 @@ export async function notifyMissingCity(chatId, bot, command) {
         sendErrorMessage(chatId, bot);
     }
     }
-  }
+  };
 
 export async function sendCatPhoto(chatId, bot, axios, catUrl) {
     const response = await axios.get(catUrl);
     const cat = response.data.data.url;
     await bot.sendPhoto(chatId, cat);
-  }
+  };
   
 export async function sendDogPhoto(chatId, bot, axios, dogUrl) {
     const response = await axios.get(dogUrl);
     const dog = response.data.message;
     await bot.sendPhoto(chatId, dog);
-  }
+  };
 
 export async function sendHelpMessage(chatId, bot) {
     bot.sendMessage(
@@ -52,4 +52,4 @@ export async function sendHelpMessage(chatId, bot) {
 /createTask - создание задач и напоминаний
 /tasks - просмотр всех задач`
     );
-  }
+  };
