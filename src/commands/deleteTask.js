@@ -6,7 +6,7 @@ export async function deleteTask(msg) {
     const chatId = msg.chat.id;
 
     const tasks = await collection.find({ id: chatId, task: { $exists: true } }).toArray();
-        let tasksMsg = 'Ваши задачи:\n\n';;
+        let tasksMsg = '\n\n';;
         if (tasks.length === 0) {
             tasksMsg = 'У вас нету запланированных задач';
             bot.sendMessage(chatId, tasksMsg);
