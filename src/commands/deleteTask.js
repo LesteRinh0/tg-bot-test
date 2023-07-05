@@ -6,14 +6,14 @@ export async function deleteTask(msg) {
     const chatId = msg.chat.id;
 
     const tasks = await collection.find({ id: chatId, task: { $exists: true } }).toArray();
-        let tasksMsg = '\n\n';;
+        let tasksMsg = '\n';;
         if (tasks.length === 0) {
             tasksMsg = 'У вас нету запланированных задач';
             bot.sendMessage(chatId, tasksMsg);
         } else {
             tasks.forEach((task) => {
                     tasksMsg += `• ${task.task}\n`;});
-          bot.sendMessage(chatId, 'Выберите задачу для удаления:\n' + tasksMsg);
+          bot.sendMessage(chatId, 'Выберите задачу для удаления:' + tasksMsg);
 
           bot.once('message', (msg) => {
           const selectedTaskIndex = parseInt(msg.text) - 1;
