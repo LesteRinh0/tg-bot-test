@@ -12,6 +12,7 @@ import { recommendCity } from './src/commands/recommendCity.js';
 import { handleSubscribe } from './src/commands/handleSubscribe.js';
 import { handleUnsubscribe } from './src/commands/handleUnsubscribe.js';
 import { gracefulShutdown } from './src/configs/gracefulShutdown.js';
+import { deleteTask } from './src/commands/deleteTask.js';
 
 
 process.on('unhandledRejection', (error) => {
@@ -67,3 +68,5 @@ bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
 bot.onText(/\/createTask/, createTask);
 
 bot.onText(/\/tasks/, viewTasks);
+
+bot.onText(/\/deleteTask/, deleteTask);

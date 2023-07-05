@@ -21,7 +21,7 @@ export async function handleSubscribe(msg, match, bot, collection, schedule) {
       bot.sendMessage(chatId, `Вы уже подписаны на уведомления о погоде города ${cityName}.`);
     } else {
       schedule.scheduleJob('timer', notifySubsCity, everyDayNotify(bot, cityName, chatId));
-      bot.sendMessage(chatId, `Вы подписались на ежедневные уведомления о погоде города ${cityName}`);
+      bot.sendMessage(chatId, `Вы подписались на ежедневные уведомления о погоде города ${cityName}. Следующее уведомление о погоде будет в 9:00.`);
       collection.insertOne({
         id: chatId,
         city: cityName,
@@ -30,5 +30,5 @@ export async function handleSubscribe(msg, match, bot, collection, schedule) {
     }
   } catch (error) {
     sendErrorMessage(chatId, bot);
-  }
+    }
   };
