@@ -20,7 +20,6 @@ export async function deleteTask(msg) {
 
           if (isNaN(selectedTaskIndex) || selectedTaskIndex < 0 || selectedTaskIndex >= tasks.length) {
           bot.sendMessage(chatId, 'Некорректный номер задачи. Попробуйте еще раз');
-          return;
           }
 
           const selectedTask = tasks[selectedTaskIndex];
