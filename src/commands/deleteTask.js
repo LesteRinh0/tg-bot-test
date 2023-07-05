@@ -1,3 +1,4 @@
+import { bot } from "../configs/botConfig.js";
 import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
 import { collection } from "../configs/mongoConfig.js";
 
