@@ -4,16 +4,16 @@ import { collection } from "../configs/mongoConfig.js";
 export async function deleteTask(msg) {
     const chatId = msg.chat.id;
 
-    const tasks = collection.find({ id: chatId, task: { $exists: true } }).toArray();
-
-      if (tasks.length === 0) {
-        bot.sendMessage(chatId, 'У вас нет запланированных задач');
-        return;
-      }
-
-      const taskList = tasks.map((task, index) => `${index + 1}. ${task.name}`).join('\n');
-
-      bot.sendMessage(chatId, 'Выберите задачу для удаления:\n' + taskList);
+    const tasks = await collection.find({ id: chatId, task: { $exists: true } }).toArray();
+        let tasksMsg = 'Ваши задачи:\n\n';;
+        if (tasks.length === 0) {
+            tasksMsg = 'У вас нету запланированных задач';
+        } else {
+            tasks.forEach((task) => {
+                    tasksMsg += `• ${task.task}\n`;});
+        }       
+        
+      bot.sendMessage(chatId, 'Выберите задачу для удаления:\n' + tasksMsg);
 
       bot.once('message', (msg) => {
         const selectedTaskIndex = parseInt(msg.text) - 1;
@@ -33,4 +33,4 @@ export async function deleteTask(msg) {
           bot.sendMessage(chatId, `Задача "${selectedTask.name}" успешно удалена`);
         });
       });
-    };
+  };
