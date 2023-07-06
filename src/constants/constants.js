@@ -25,7 +25,8 @@ export const keyboardOptions = {
   },
   };
 
-export const noCityMessage = `Не введен город при вызове команды! Пример:`;
+export const noCityMessage = `Не указан город при вызове команды! 
+Пример вызова команды:`;
 
 export const helpMessage = `Стандартные команды представлены в меню!
 Дополнительные команды:
