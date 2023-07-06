@@ -23,7 +23,10 @@ process.on('SIGINT', gracefulShutdown);
 
 client.connect();
 
-app.listen(keys.port || 5000);
+const server = app.listen(keys.port || 5000, () => {
+  server.address().address;
+  server.address();
+});
 
 bot.setMyCommands([
   { command: '/help', description: 'Список команд' },
