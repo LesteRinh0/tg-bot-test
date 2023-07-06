@@ -15,23 +15,15 @@ import { gracefulShutdown } from './src/configs/gracefulShutdown.js';
 import { deleteTask } from './src/commands/deleteTask.js';
 
 
-process.on('unhandledRejection', (error) => {
-  console.error('Unhandled Rejection:', error);
-});
+process.on('unhandledRejection');
 
-process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
-});
+process.on('uncaughtException');
 
 process.on('SIGINT', gracefulShutdown);
 
 client.connect();
 
-const server = app.listen(keys.port || 5000, () => {
-  const host = server.address().address;
-  const { port } = server.address();
-  console.log('Web server started at http://%s:%s', host, port);
-});
+app.listen(keys.port || 5000);
 
 bot.setMyCommands([
   { command: '/help', description: 'Список команд' },
