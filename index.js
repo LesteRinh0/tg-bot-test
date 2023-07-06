@@ -15,9 +15,13 @@ import { gracefulShutdown } from './src/configs/gracefulShutdown.js';
 import { deleteTask } from './src/commands/deleteTask.js';
 
 
-process.on('unhandledRejection');
+process.on('unhandledRejection', (error) => {
+  console.error('Unhandled Rejection:', error);
+});
 
-process.on('uncaughtException');
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
 
 process.on('SIGINT', gracefulShutdown);
 
