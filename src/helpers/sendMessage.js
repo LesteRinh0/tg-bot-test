@@ -30,6 +30,7 @@ export async function notifyMissingCity(chatId, bot, command) {
   };
 
 export async function sendCatPhoto(chatId, bot, axios, catUrl) {
+    bot.sendMessage(chatId, `${catUrl}`)
     const response = await axios.get(catUrl);
     const cat = response.data.data.url;
     await bot.sendPhoto(chatId, cat);
