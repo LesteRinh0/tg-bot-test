@@ -49,7 +49,7 @@ export async function createTask(createTaskMsg) {
           );
           bot.on('callback_query', setReminder);
         } catch (error) {
-          bot.sendMessage(chatId, 'Ошибка при сохранении задачи.');
+          sendErrorMessage(chatId, bot);
         }
       }
     });
