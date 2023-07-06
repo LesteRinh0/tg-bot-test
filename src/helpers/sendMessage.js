@@ -9,7 +9,7 @@ export async function notifyStartCommand(chatId, bot, firstName) {
 export async function notifyMissingCity(chatId, bot, command) {
     bot.sendMessage(
       chatId,
-      noCityMessage
+      noCityMessage(command)
     );
     if (command === '/unsubscribe'){
       try {
