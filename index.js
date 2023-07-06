@@ -1,6 +1,7 @@
 import schedule from 'node-schedule';
 
 import './src/imports/imports.js'
+import { gracefulShutdown } from 'node-schedule';
 
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);

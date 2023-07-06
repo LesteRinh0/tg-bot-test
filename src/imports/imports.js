@@ -10,7 +10,6 @@ import { sendWeather } from '../commands/sendWeather.js';
 import { recommendCity } from '../commands/recommendCity.js';
 import { handleSubscribe } from '../commands/handleSubscribe.js';
 import { handleUnsubscribe } from '../commands/handleUnsubscribe.js';
-import { gracefulShutdown } from '../configs/gracefulShutdown.js';
 import { deleteTask } from '../commands/deleteTask.js';
 
 export {
@@ -27,6 +26,5 @@ export {
   recommendCity,
   handleSubscribe,
   handleUnsubscribe,
-  gracefulShutdown,
   deleteTask,
 };
