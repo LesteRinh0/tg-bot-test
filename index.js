@@ -1,6 +1,6 @@
 import schedule from 'node-schedule';
 
-import '/imports/imports.js';
+import 'imports/imports.js'
 
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
