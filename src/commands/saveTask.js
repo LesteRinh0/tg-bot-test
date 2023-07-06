@@ -1,6 +1,7 @@
 import { bot } from '../configs/botConfig.js';
 import { collection } from '../configs/mongoConfig.js';
 import { setReminder } from '../helpers/setReminder.js';
+import { sendErrorMessage } from '../helpers/sendErrorMessage.js';
 
 export async function createTask(createTaskMsg) {
   const chatId = createTaskMsg.chat.id;
@@ -12,7 +13,7 @@ export async function createTask(createTaskMsg) {
         const task = msg.text;
 
         if (task.startsWith("/")) {
-          bot.sendMessage(chatId, 'Ошибка: задача не может начинаться с "/"');
+          sendErrorMessage(chatId, bot);
           return;
         }
 

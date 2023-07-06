@@ -1,5 +1,6 @@
 import { collection } from "../configs/mongoConfig.js";
 import { sendErrorMessage } from "./sendErrorMessage.js";
+import { noCityMessage, helpMessage } from "../constants/constants.js";
 
 export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
@@ -8,7 +9,7 @@ export async function notifyStartCommand(chatId, bot, firstName) {
 export async function notifyMissingCity(chatId, bot, command) {
     bot.sendMessage(
       chatId,
-      `Не введен город при вызове команды! Пример: ${command} Минск`
+      noCityMessage
     );
     if (command === '/unsubscribe'){
       try {
@@ -43,14 +44,6 @@ export async function sendDogPhoto(chatId, bot, axios, dogUrl) {
 export async function sendHelpMessage(chatId, bot) {
     bot.sendMessage(
       chatId,
-      `Стандартные команды представлены в меню!
-    Дополнительные команды:
-/subscribe *Город* - подписка на ежедневные уведомления о погоде введенного города;
-/unsubscribe *Город* - отписка от ежедневных уведомлений о погоде введенного города;
-/weather *Город* - сведения о погоде выбранного города;
-/recommend *Город* - рекомендации по местам, которые можно посетить в введенном городе
-/createTask - создание задач и напоминаний
-/tasks - просмотр всех задач
-/deleteTask - удаление задачи`
+      helpMessage
     );
   };
