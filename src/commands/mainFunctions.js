@@ -21,7 +21,7 @@ export async function processCommand(text, chatId, bot, msg) {
       await notifyMissingCity(chatId, bot, "/unsubscribe");
       break;
     case commands.isCatCommand(text):
-      await sendCatPhoto(chatId, bot, axios, keys.url);
+      await sendCatPhoto(chatId, bot, axios, links.cat_url);
       break;
     case commands.isDogCommand(text):
       await sendDogPhoto(chatId, bot, axios, links.dog_url);
