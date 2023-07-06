@@ -19,5 +19,5 @@ export async function recommendCity(bot, msg, match) {
       });
     } catch (error) {
       sendErrorMessage(chatId, bot);
-    }
+      }
   };

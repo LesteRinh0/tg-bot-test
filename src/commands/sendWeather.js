@@ -17,6 +17,6 @@ export async function sendWeather(chatId, cityName, bot) {
           });
     } catch (error) {
       sendErrorMessage(chatId, bot);
-    }
+      }
   };
   

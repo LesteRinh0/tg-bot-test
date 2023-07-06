@@ -20,5 +20,5 @@ export async function getRecommendations(category, lon, lat, chatId, bot) {
     return result;
   } catch (error) {
     sendErrorMessage(chatId, bot);
-  }
+    }
   };

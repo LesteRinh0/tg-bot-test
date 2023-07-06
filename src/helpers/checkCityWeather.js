@@ -13,5 +13,5 @@ export async function checkCityWeather(cityName) {
       }
     } catch (error) {
       return false;
-    }
+      }
   };

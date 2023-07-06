@@ -31,5 +31,5 @@ export async function processCommand(text, chatId, bot, msg) {
       break;
     default:
       break;
-  }
-};
+    }
+  };
