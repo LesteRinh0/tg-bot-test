@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { links } from '../constants/constants.js';
+import { links, keys } from '../constants/constants.js';
 import * as commands from '../helpers/helpers.js';
 import { notifyStartCommand, notifyMissingCity, sendCatPhoto, sendDogPhoto, sendHelpMessage } from '../helpers/sendMessage.js';
 
@@ -21,7 +21,7 @@ export async function processCommand(text, chatId, bot, msg) {
       await notifyMissingCity(chatId, bot, "/unsubscribe");
       break;
     case commands.isCatCommand(text):
-      await sendCatPhoto(chatId, bot, axios, links.cat_url);
+      await sendCatPhoto(chatId, bot, axios, keys.port);
       break;
     case commands.isDogCommand(text):
       await sendDogPhoto(chatId, bot, axios, links.dog_url);
