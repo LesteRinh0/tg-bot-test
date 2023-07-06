@@ -1,7 +1,10 @@
 import schedule from 'node-schedule';
-
 import './src/imports/imports.js'
+
 import { gracefulShutdown } from 'node-schedule';
+import { app } from './src/configs/serverConfig.js';
+import { client, collection } from './src/configs/mongoConfig.js';
+import { bot } from './src/configs/botConfig.js';
 
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
