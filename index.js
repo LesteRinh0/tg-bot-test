@@ -5,6 +5,7 @@ import { gracefulShutdown } from 'node-schedule';
 import { app } from './src/configs/serverConfig.js';
 import { client, collection } from './src/configs/mongoConfig.js';
 import { bot } from './src/configs/botConfig.js';
+import { keys } from './src/constants/constants.js';
 
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
