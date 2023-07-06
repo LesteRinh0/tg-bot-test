@@ -1,7 +1,7 @@
 import axios from "axios";
 import "dotenv/config";
 
-import { links } from "../constants/constants";
+import { links } from "../constants/constants.js";
 
 export const everyDayNotify = (bot, cityName, chatId) => async () => {
   const response = await axios.get(
