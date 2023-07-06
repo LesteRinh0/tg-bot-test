@@ -11,7 +11,8 @@ export const keys = {
 export const links = {
     weatherAPI: process.env.WEATHER_LINK,
     dog_url: process.env.DOG_URL,
-    cat_url: process.env.CAT_URL
+    cat_url: process.env.CAT_URL,
+    recommend_url: process.env.RECOMMEND_URL
   };
 
 export const keyboardOptions = {
