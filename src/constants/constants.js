@@ -8,10 +8,10 @@ export const keys = {
   place_api: process.env.PLACE_API,
   };
 
-export const links = {
-  weatherAPI: 'https://api.openweathermap.org/data/2.5/weather',
-  dog_url: 'https://dog.ceo/api/breeds/image/random',
-  cat_url: 'https://meow.senither.com/v1/random'
+  export const links = {
+    weatherAPI: process.env.WEATHER_LINK,
+    dog_url: process.env.DOG_URL,
+    cat_url: process.env.CAT_URL
   };
 
 export const keyboardOptions = {
