@@ -1,6 +1,7 @@
 import { collection } from "../configs/mongoConfig.js";
 import { sendErrorMessage } from "./sendErrorMessage.js";
 import { noCityMessage, helpMessage } from "../constants/constants.js";
+import { sendWaitMessage } from "./sendWaitMessage.js";
 
 export async function notifyStartCommand(chatId, bot, firstName) {
     bot.sendMessage(chatId, `Добро пожаловать ${firstName}!`);
@@ -30,12 +31,14 @@ export async function notifyMissingCity(chatId, bot, command) {
   };
 
 export async function sendCatPhoto(chatId, bot, axios, catUrl) {
+    sendWaitMessage(chatId, bot);
     const response = await axios.get(catUrl);
     const cat = response.data.data.url;
     await bot.sendPhoto(chatId, cat);
   };
   
 export async function sendDogPhoto(chatId, bot, axios, dogUrl) {
+    sendWaitMessage(chatId, bot);
     const response = await axios.get(dogUrl);
     const dog = response.data.message;
     await bot.sendPhoto(chatId, dog);
