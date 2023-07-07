@@ -2,8 +2,10 @@ import axios from "axios";
 
 import { links, keys } from "../constants/constants.js";
 import { sendErrorMessage } from "../helpers/sendErrorMessage.js";
+import { sendWaitMessage } from "../helpers/sendWaitMessage.js";
 
 export async function sendWeather(chatId, cityName, bot) {
+    sendWaitMessage(chatId, bot);
     const link = `${links.weatherAPI}?q=${cityName}&appid=${keys.weather_api}&units=metric`;
     try {
       axios.get(link)
